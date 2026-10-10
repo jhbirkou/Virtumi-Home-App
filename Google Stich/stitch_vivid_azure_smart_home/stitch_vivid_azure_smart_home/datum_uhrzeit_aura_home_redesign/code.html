@@ -1,0 +1,350 @@
+<!DOCTYPE html><html class="light" lang="de" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Aura Home - Datum &amp; Uhrzeit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#7ad0ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001a41",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#151d1e",
+                        "on-background": "#151d1e",
+                        "inverse-primary": "#adc7ff",
+                        "secondary": "#00668a",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#f2fbfc",
+                        "surface": "#f2fbfc",
+                        "primary": "#0059bb",
+                        "tertiary-container": "#c64f00",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-container-low": "#ecf5f6",
+                        "on-primary-container": "#fefcff",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#c3e8ff",
+                        "primary-container": "#0070ea",
+                        "primary-fixed-dim": "#adc7ff",
+                        "on-secondary-fixed": "#001e2c",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "tertiary": "#9e3d00",
+                        "surface-container": "#e7f0f1",
+                        "on-surface-variant": "#414754",
+                        "surface-dim": "#d3dcdd",
+                        "outline": "#717786",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#e9f2f3",
+                        "inverse-surface": "#293233",
+                        "on-primary-fixed-variant": "#004493",
+                        "surface-variant": "#dbe4e5",
+                        "background": "#f2fbfc",
+                        "tertiary-fixed": "#ffdbcc",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c1c6d7",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e1eaeb",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "surface-container-highest": "#dbe4e5",
+                        "on-secondary-container": "#004d69",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "surface-tint": "#005bc0",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-container": "#3dc2fd",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "unit": "8px",
+                        "card-gap": "20px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Geist"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f2fbfc;
+            color: #151d1e;
+            min-height: max(884px, 100dvh);
+        }
+
+        /* Modern Neomorphism Shadows from SCREEN_39 */
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+        }
+
+        .neumorphic-sunken {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        }
+
+        .toggle-switch input:checked + .toggle-bg {
+            background-color: #0070ea;
+            box-shadow: 0 0 10px rgba(0, 112, 234, 0.4);
+        }
+
+        .toggle-switch input:checked + .toggle-bg .toggle-dot {
+            transform: translateX(24px);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .icon-glow-blue { filter: drop-shadow(0 0 4px rgba(0, 123, 255, 0.5)); }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md min-h-screen custom-scrollbar overflow-x-hidden" style="opacity: 1;">
+<!-- Header Section -->
+<header class="w-full px-6 max-w-lg mx-auto pt-6">
+<div class="flex items-center justify-between mb-8">
+<button class="w-12 h-12 rounded-full neumorphic-raised flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[24px] text-primary">chevron_left</span>
+</button>
+<div class="flex items-center gap-4">
+<button class="w-12 h-12 rounded-full neumorphic-raised flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[24px] text-primary">edit</span>
+</button>
+<button class="w-12 h-12 rounded-full neumorphic-raised flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[24px] text-primary">refresh</span>
+</button>
+</div>
+</div>
+<!-- Header Card -->
+<section class="neumorphic-raised rounded-3xl p-5 flex items-center gap-6 mb-10" style="transform: scale(1);">
+<div class="relative">
+  <div class="w-16 h-16 rounded-full neumorphic-sunken flex items-center justify-center bg-blue-500/5 border border-white/60">
+    <div class="relative flex items-center justify-center">
+      <span class="material-symbols-outlined text-[32px] text-primary/20 absolute">schedule</span>
+      <span class="material-symbols-outlined text-[32px] text-primary relative" style="font-variation-settings: 'FILL' 1;">schedule</span>
+    </div>
+  </div>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold leading-none">Datum &amp; Uhrzeit</h2>
+</div>
+</section>
+</header>
+<main class="px-6 pb-32 max-w-lg mx-auto space-y-10">
+<!-- Section 1: NTP SERVER -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">NTP SERVER</p>
+<div class="neumorphic-raised rounded-3xl p-6 space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600">dns</span>
+</div>
+<span class="font-body-lg text-body-lg">NTP Server aktiv</span>
+</div>
+<label class="toggle-switch relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="toggle-bg w-14 h-8 bg-primary-container rounded-full transition-all duration-300 shadow-inner">
+<div class="toggle-dot absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center translate-x-[24px]">
+</div>
+</div>
+</label>
+</div>
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant px-1">Primärer NTP Server</label>
+<input class="w-full h-14 rounded-2xl border-none neumorphic-sunken px-4 focus:ring-2 focus:ring-primary/20 text-body-md transition-all bg-transparent" type="text" value="pool.ntp.org">
+</div>
+<div class="space-y-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant px-1">Sekundärer NTP Server</label>
+<input class="w-full h-14 rounded-2xl border-none neumorphic-sunken px-4 focus:ring-2 focus:ring-primary/20 text-body-md transition-all bg-transparent" type="text" value="time.google.com">
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: MANUELL EINSTELLEN -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">MANUELL EINSTELLEN</p>
+<div class="neumorphic-raised rounded-3xl p-6 grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant px-1">Datum</label>
+<div class="relative">
+<input class="w-full h-14 rounded-2xl border-none neumorphic-sunken px-4 pr-10 focus:ring-2 focus:ring-primary/20 text-body-md transition-all bg-transparent" placeholder="TT.MM.JJJJ" type="text">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50">calendar_today</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant px-1">Uhrzeit</label>
+<div class="relative">
+<input class="w-full h-14 rounded-2xl border-none neumorphic-sunken px-4 pr-10 focus:ring-2 focus:ring-primary/20 text-body-md transition-all bg-transparent" placeholder="HH:MM" type="text">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50">schedule</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: ZEITZONE & SEARCH -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">ZEITZONE</p>
+<div class="neumorphic-raised rounded-3xl p-6 space-y-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/70">search</span>
+<input class="w-full h-14 rounded-2xl border-none bg-surface-container-low/50 neumorphic-sunken px-12 focus:ring-2 focus:ring-primary/20 text-body-md transition-all" placeholder="Standort suchen" type="text">
+</div>
+<div class="bg-primary/5 rounded-2xl p-4 border border-primary/10 flex items-center justify-between group cursor-pointer hover:bg-primary/10 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div>
+<p class="font-body-lg text-primary font-semibold">Berlin, Deutschland</p>
+<p class="text-label-sm font-label-sm text-primary/70">GMT+1</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+<!-- Dropdown & Switch -->
+<div class="space-y-6 pt-2 border-t border-surface-variant/30">
+<div class="space-y-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant px-1">Alternative Zeitzone</label>
+<div class="relative">
+<select class="w-full h-14 rounded-2xl border-none neumorphic-sunken px-4 focus:ring-2 focus:ring-primary/20 text-body-md transition-all appearance-none bg-transparent">
+<option>Mitteleuropäische Zeit (CET)</option>
+<option>Osteuropäische Zeit (EET)</option>
+<option>Westeuropäische Zeit (WET)</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50 pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center icon-glow-orange">
+<span class="material-symbols-outlined text-orange-600">wb_sunny</span>
+</div>
+<div>
+<span class="font-body-lg text-body-lg block">Zeitumstellung</span>
+<span class="text-label-sm text-on-surface-variant">Sommer-/Winterzeit</span>
+</div>
+</div>
+<label class="toggle-switch relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="toggle-bg w-14 h-8 bg-primary-container rounded-full transition-all duration-300 shadow-inner">
+<div class="toggle-dot absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center translate-x-[24px]"></div>
+</div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+
+<!-- Action Buttons -->
+<section class="neumorphic-raised rounded-3xl p-6 flex gap-4">
+<button class="flex-1 h-14 flex items-center justify-center gap-2 rounded-2xl bg-white border border-white/60 shadow-sm hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-error">close</span>
+<span class="font-semibold text-on-surface">Abbrechen</span>
+</button>
+<button class="flex-1 h-14 flex items-center justify-center gap-2 rounded-2xl bg-primary text-white shadow-lg hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-accent-green" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-semibold">Speichern</span>
+</button>
+</section></main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">home</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span>
+</button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">bolt</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span>
+</button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">group</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span>
+</button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div>
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for the back button
+        document.querySelector('button').addEventListener('click', () => {
+            document.body.style.opacity = '0.5';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                window.history.back();
+            }, 100);
+        });
+
+        // Micro-interaction for toggle switches
+        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const bg = this.nextElementSibling;
+                const dot = bg.querySelector('.toggle-dot');
+                if (this.checked) {
+                    bg.classList.add('bg-primary-container');
+                    bg.classList.remove('bg-surface-dim');
+                    dot.classList.add('translate-x-[24px]');
+                } else {
+                    bg.classList.remove('bg-primary-container');
+                    bg.classList.add('bg-surface-dim');
+                    dot.classList.remove('translate-x-[24px]');
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+</body></html>

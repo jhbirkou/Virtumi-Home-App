@@ -1,0 +1,341 @@
+<!DOCTYPE html><html class="light" lang="de" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Aura Home - Passwort ändern</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Plus Jakarta Sans & Geist -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface": "#f2fbfc",
+                "on-tertiary": "#ffffff",
+                "on-secondary-container": "#005d7e",
+                "primary-fixed": "#d8e2ff",
+                "surface-variant": "#dbe4e5",
+                "surface-container": "#e7f0f1",
+                "primary": "#0058bb",
+                "secondary-fixed-dim": "#87cff8",
+                "background": "#f2fbfc",
+                "outline": "#727785",
+                "error-container": "#ffdad6",
+                "surface-bright": "#f2fbfc",
+                "tertiary-fixed-dim": "#ffb695",
+                "on-background": "#151d1e",
+                "accent-green": "#22c55e",
+                "secondary-fixed": "#c3e8ff",
+                "accent-indigo": "#4f46e5",
+                "surface-container-lowest": "#ffffff",
+                "secondary-container": "#8dd5fe",
+                "outline-variant": "#c1c6d6",
+                "shadow-light": "#ffffff",
+                "on-error": "#ffffff",
+                "on-primary-container": "#fdfbff",
+                "on-primary-fixed": "#001a41",
+                "on-tertiary-fixed-variant": "#7b2e00",
+                "tertiary-fixed": "#ffdbcc",
+                "accent-purple": "#9333ea",
+                "error": "#ba1a1a",
+                "tertiary-container": "#c64f00",
+                "accent-orange": "#ea580c",
+                "surface-container-high": "#e1eaeb",
+                "inverse-primary": "#adc6ff",
+                "tertiary": "#9e3e00",
+                "secondary": "#00668a",
+                "on-secondary": "#ffffff",
+                "shadow-dark": "#d1d9e6",
+                "on-surface": "#151d1e",
+                "on-secondary-fixed": "#001e2c",
+                "on-primary-fixed-variant": "#004493",
+                "status-error": "#ba1a1a",
+                "on-tertiary-fixed": "#351000",
+                "on-secondary-fixed-variant": "#004c68",
+                "primary-container": "#0070ea",
+                "surface-container-highest": "#dbe4e5",
+                "primary-fixed-dim": "#adc6ff",
+                "inverse-on-surface": "#e9f2f3",
+                "surface-container-low": "#ecf5f6",
+                "surface-tint": "#005bc0",
+                "on-primary": "#ffffff",
+                "on-surface-variant": "#414754",
+                "inverse-surface": "#293233",
+                "surface-dim": "#d3dcdd",
+                "surface-bg": "#f2fbfc",
+                "on-tertiary-container": "#fffbff",
+                "on-error-container": "#93000a"
+        },
+        "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "gutter": "16px",
+                "section-margin": "40px",
+                "unit": "8px",
+                "card-gap": "20px",
+                "container-padding": "24px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "label-sm": [
+                        "Geist"
+                ],
+                "headline-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Plus Jakarta Sans"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "500"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "36px",
+                                "fontWeight": "700"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: #f2fbfc;
+            color: #151d1e;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+        }
+
+        .neumorphic-sunken {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        }
+
+        .active-nav-shadow {
+            box-shadow: inset 4px 4px 8px #B2EBF2, inset -4px -4px 8px #FFFFFF;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .icon-glow-blue { filter: drop-shadow(0 0 4px rgba(0, 123, 255, 0.5)); }
+        .icon-glow-orange { filter: drop-shadow(0 0 4px rgba(255, 123, 0, 0.5)); }
+        .icon-glow-green { filter: drop-shadow(0 0 4px rgba(0, 255, 123, 0.5)); }
+
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(0, 88, 187, 0.25);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="min-h-screen font-body-md text-on-surface custom-scrollbar overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="w-full px-6 max-w-lg mx-auto pt-8"><div class="flex justify-between items-center w-full mb-6">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface neumorphic-raised hover:scale-105 active:scale-95 transition-all text-primary">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+
+<div class="flex gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface neumorphic-raised hover:scale-105 active:scale-95 transition-all text-primary">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface neumorphic-raised hover:scale-105 active:scale-95 transition-all text-primary">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div></header>
+<main class="px-6 pb-32 max-w-lg mx-auto space-y-10">
+<!-- Hero Section / Profile Card Style -->
+<section class="neumorphic-raised rounded-[32px] p-5 flex items-center gap-6">
+<div class="relative">
+<div class="w-16 h-16 rounded-full flex items-center justify-center bg-surface neumorphic-raised border border-white/60 shadow-sm">
+  <div class="w-12 h-12 rounded-full bg-indigo-500/10 flex items-center justify-center icon-glow-blue">
+    <span class="material-symbols-outlined text-primary scale-125" style="font-variation-settings: 'FILL' 1;">lock</span>
+  </div>
+</div>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold leading-none mb-1">Passwort ändern</h2>
+
+</div>
+</section>
+<!-- Form Card -->
+<section class="neumorphic-raised rounded-[32px] p-8 space-y-6">
+<!-- Current Password -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant px-1 font-semibold">Aktuelles Passwort</label>
+<div class="relative group">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50 group-focus-within:text-primary transition-colors flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500/10 icon-glow-blue">
+<span class="material-symbols-outlined text-indigo-600" data-icon="lock">lock</span>
+</div>
+<input class="w-full h-14 pl-16 pr-4 rounded-2xl border-none neumorphic-sunken focus:ring-2 focus:ring-primary/20 bg-transparent text-on-surface font-body-md transition-all" readonly="" type="password" value="............">
+</div>
+</div>
+<!-- New Password -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant px-1 flex justify-between font-semibold">
+<span class="">Neues Passwort</span>
+<span class="opacity-60">Min. 8 Zeichen</span>
+</label>
+<div class="relative group">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50 group-focus-within:text-primary transition-colors flex items-center justify-center w-10 h-10 rounded-xl bg-orange-500/10 icon-glow-orange">
+<span class="material-symbols-outlined text-orange-600" data-icon="lock_reset">lock_reset</span>
+</div>
+<input class="w-full h-14 pl-16 pr-4 rounded-2xl border-none neumorphic-sunken focus:ring-2 focus:ring-primary/20 bg-transparent text-on-surface font-body-md transition-all" placeholder="Passwort eingeben" type="password">
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant px-1 font-semibold">Passwort bestätigen</label>
+<div class="relative group">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50 group-focus-within:text-primary transition-colors flex items-center justify-center w-10 h-10 rounded-xl bg-green-500/10 icon-glow-green">
+<span class="material-symbols-outlined text-green-600" data-icon="verified_user">verified_user</span>
+</div>
+<input class="w-full h-14 pl-16 pr-4 rounded-2xl border-none neumorphic-sunken focus:ring-2 focus:ring-primary/20 bg-transparent text-on-surface font-body-md transition-all" placeholder="Passwort wiederholen" type="password">
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+
+<!-- Action Buttons -->
+<section class="neumorphic-raised rounded-[32px] p-6 flex gap-4">
+<button class="flex-1 h-14 flex items-center justify-center gap-2 rounded-2xl bg-white border border-white/60 shadow-sm hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-status-error">close</span>
+<span class="font-semibold text-on-surface">Abbrechen</span>
+</button>
+<button class="flex-1 h-14 flex items-center justify-center gap-2 rounded-2xl bg-primary text-white shadow-lg hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-accent-green" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-semibold">Speichern</span>
+</button>
+</section></main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">home</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span>
+</button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">bolt</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span>
+</button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">group</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span>
+</button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div>
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for buttons
+        document.querySelectorAll('button, a').forEach(elem => {
+            elem.addEventListener('mousedown', () => {
+                elem.classList.add('scale-95');
+            });
+            elem.addEventListener('mouseup', () => {
+                elem.classList.remove('scale-95');
+            });
+            elem.addEventListener('mouseleave', () => {
+                elem.classList.remove('scale-95');
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

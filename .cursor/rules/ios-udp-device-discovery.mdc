@@ -1,0 +1,37 @@
+---
+description: iOS UDP-Gerätesuche – geschützte Dateien bei Sync/Copy nicht überschreiben
+globs:
+  - lib/shared/data/udp/udp_device_service.dart
+  - ios/Runner/Info.plist
+  - ios/Runner/Runner.entitlements
+  - ios/Runner/Runner.multicast.entitlements
+  - ios/Runner.xcodeproj/project.pbxproj
+  - scripts/install_iphone.sh
+alwaysApply: false
+---
+
+# iOS UDP-Gerätesuche (geschützte Dateien)
+
+Diese Dateien enthalten den funktionierenden iPhone-Fix für die UDP-Gerätesuche. Beim Mergen, Branch-Wechsel oder Copy-Paste aus anderen Projekt-Kopien **nicht blind überschreiben** — stattdessen gezielt mergen.
+
+## Geschützte Dateien
+
+1. `lib/shared/data/udp/udp_device_service.dart` — Subnetz-Broadcast statt `255.255.255.255` auf iOS; extra Probe nach 900 ms
+2. `ios/Runner/Info.plist` — `NSLocalNetworkUsageDescription`, `NSBonjourServices` (`_virtumi._udp`), Standort für WiFi-IP
+3. `ios/Runner/Runner.entitlements` — leer (signierbar mit persönlichem Dev-Team)
+4. `ios/Runner/Runner.multicast.entitlements` — Multicast-Entitlement vorbereitet, **noch nicht** in `project.pbxproj` aktiv (persönliches Team kann es nicht signieren)
+5. `ios/Runner.xcodeproj/project.pbxproj` — `CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements`
+
+## iPhone-Deploy (Mac)
+
+```bash
+export SUPABASE_URL=...
+export SUPABASE_ANON_KEY=...
+./scripts/install_iphone.sh
+```
+
+## Hinweise
+
+- Aktueller Fix: **Subnetz-Broadcast** (`NetworkInfoService.getBroadcastIp()`), kein globales `255.255.255.255` auf iOS
+- Beim ersten Start: iOS-Dialog „Lokales Netzwerk“ und Standort erlauben
+- Sicherung Mac-Version: `App/Sicherung/20260618/MacVersion`

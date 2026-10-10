@@ -1,0 +1,203 @@
+<!DOCTYPE html><html class="light" lang="de" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Räume - Direct (UDP)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#0070ea",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#fffbff",
+                        "tertiary": "#9e3d00",
+                        "surface-variant": "#dbe4e5",
+                        "secondary-fixed-dim": "#7ad0ff",
+                        "primary-fixed-dim": "#adc7ff",
+                        "secondary-container": "#3dc2fd",
+                        "surface-container": "#e7f0f1",
+                        "on-surface-variant": "#414754",
+                        "on-surface": "#151d1e",
+                        "tertiary-fixed": "#ffdbcc",
+                        "inverse-surface": "#293233",
+                        "background": "#f2fbfc",
+                        "on-primary": "#ffffff",
+                        "on-background": "#151d1e",
+                        "surface-bright": "#f2fbfc",
+                        "on-primary-container": "#fefcff",
+                        "on-primary-fixed": "#001a41",
+                        "surface": "#f2fbfc",
+                        "surface-container-highest": "#dbe4e5",
+                        "secondary": "#00668a",
+                        "on-error": "#ffffff",
+                        "outline": "#717786",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "outline-variant": "#c1c6d7",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "error-container": "#ffdad6",
+                        "primary": "#0059bb",
+                        "tertiary-container": "#c64f00",
+                        "surface-container-high": "#e1eaeb",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#adc7ff",
+                        "on-secondary-container": "#004d69",
+                        "on-secondary-fixed": "#001e2c",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#005bc0",
+                        "inverse-on-surface": "#e9f2f3",
+                        "secondary-fixed": "#c3e8ff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "surface-dim": "#d3dcdd",
+                        "surface-container-low": "#ecf5f6",
+                        "on-tertiary-fixed": "#351000"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "card-gap": "20px",
+                        "container-padding": "24px",
+                        "unit": "8px",
+                        "gutter": "16px"
+                    },
+                    fontFamily: {
+                        "label-sm": ["Geist"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "500" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }]
+                    },
+                    boxShadow: {
+                        'neumorphic': 'inset 4px 4px 8px rgba(255,255,255,0.8), 8px 8px 16px rgba(178, 235, 242, 0.5)',
+                        'neumorphic-pressed': 'inset 8px 8px 16px rgba(178, 235, 242, 0.5), inset -4px -4px 8px rgba(255,255,255,0.8)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Neumorphic base classes */
+        .neu-surface {
+            background: linear-gradient(145deg, #ffffff, #e7f0f1);
+            box-shadow: 8px 8px 16px #cbe3e6, -8px -8px 16px #ffffff;
+        }
+        .neu-button {
+            background: linear-gradient(145deg, #ffffff, #e7f0f1);
+            box-shadow: 4px 4px 8px #cbe3e6, -4px -4px 8px #ffffff;
+            transition: all 0.2s ease;
+        }
+        .neu-button:active {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #cbe3e6, inset -4px -4px 8px #ffffff;
+        }
+        
+        /* Image masking for the isometric icons to look like rounded app icons */
+        .iso-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            /* Adjusting position to show different parts of the single image */
+            object-position: center;
+        }
+        .iso-icon-1 { object-position: 20% 20%; }
+        .iso-icon-2 { object-position: 80% 20%; }
+    </style>
+</head>
+<body class="font-body-md text-body-md min-h-screen custom-scrollbar overflow-x-hidden bg-surface-bg">
+<!-- Top App Bar -->
+<!-- Main Content Canvas -->
+<main class="px-6 pb-32 max-w-lg mx-auto space-y-6"><header class="flex items-center justify-between w-full pt-6 mb-8">
+  <button class="w-12 h-12 rounded-full neu-surface flex items-center justify-center active:scale-95 transition-transform">
+    <span class="material-symbols-outlined text-primary">chevron_left</span>
+  </button>
+  <div class="flex gap-4">
+    <button class="w-12 h-12 rounded-full neu-surface flex items-center justify-center active:scale-95 transition-transform">
+      <span class="material-symbols-outlined text-primary">edit</span>
+    </button>
+    <button class="w-12 h-12 rounded-full neu-surface flex items-center justify-center active:scale-95 transition-transform">
+      <span class="material-symbols-outlined text-primary">refresh</span>
+    </button>
+  </div>
+</header><section class="neu-surface rounded-3xl p-5 flex items-center gap-6 mb-6">
+<div class="relative">
+<div class="w-16 h-16 rounded-2xl flex items-center justify-center neu-surface relative overflow-hidden group"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3DqnbkTXcfFuepwMucGbjbRssX9kbLyzPz6W--EV70qQ2YDhJvxzkuxg5aESysSSyouyyuXGOCDNqJnYlsaaw6_GptY1gvmarN5BCTMvsFV8VWGCOM8BXDxZq0vhb-3cQr0gbZtuoTd4MVy1j3hiyF2FKve58giiMFuX5P5G4v6VY5KL6aerdehoLVcINs64zN-GC6nRP8PZvYk5iYownY1MPW7iGaoih78zfKa0sOMhY8edCFc8lY8RyLY5yMZMQfeUc426px8lG" alt="Etagen Icon" class="w-full h-full object-contain relative z-10"></div>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold leading-none mb-1">Räume</h2>
+</div>
+</section>
+<!-- Desktop Header (hidden on mobile) -->
+<!-- Room List -->
+<div class="grid gap-4 space-y-4">
+<!-- Room Card: Büro -->
+<div class="neu-surface rounded-3xl p-5 flex flex-col items-center text-center space-y-4 cursor-pointer transition-transform active:scale-95"><div class="flex items-center justify-between w-full">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-blue-600/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600 scale-125">work</span>
+</div>
+<div class="text-left">
+<h2 class="font-body-lg text-body-lg">Büro</h2>
+<p class="text-on-surface-variant text-sm">1 Gerät</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-primary/10 text-primary"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
+</div></div>
+<!-- Room Card: Wohnzimmer -->
+<div class="neu-surface rounded-3xl p-5 flex flex-col items-center text-center space-y-4 cursor-pointer transition-transform active:scale-95"><div class="flex items-center justify-between w-full">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-orange-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-600 scale-125">chair</span>
+</div>
+<div class="text-left">
+<h2 class="font-body-lg text-body-lg">Wohnzimmer</h2>
+<p class="text-on-surface-variant text-sm">Keine Geräte</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-primary/10 text-primary"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
+</div></div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300"><button class="flex flex-col items-center justify-center relative group px-2"><div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div><div class="w-12 h-12 flex items-center justify-center mb-1"><div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">home</span></div></div><span class="font-label-sm text-label-sm text-primary font-bold">Home</span></button><button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">bolt</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span></button><button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">group</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span></button><button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">settings</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Einstellungen</span></button></nav>
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

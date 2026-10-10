@@ -1,0 +1,402 @@
+<!DOCTYPE html><html class="light" lang="de" style="width: 390px; height: 1759px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#dbe4e5",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f2fbfc",
+                        "secondary-fixed-dim": "#7ad0ff",
+                        "inverse-surface": "#293233",
+                        "surface-container": "#e7f0f1",
+                        "primary": "#0059bb",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "on-primary-fixed": "#001a41",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001e2c",
+                        "on-secondary-container": "#004d69",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "surface-container-high": "#e1eaeb",
+                        "secondary-fixed": "#c3e8ff",
+                        "secondary": "#00668a",
+                        "on-primary-container": "#fefcff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-tint": "#005bc0",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-dim": "#d3dcdd",
+                        "on-surface-variant": "#414754",
+                        "tertiary-container": "#c64f00",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#004493",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#9e3d00",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#ecf5f6",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "primary-container": "#0070ea",
+                        "surface-bright": "#f2fbfc",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#c1c6d7",
+                        "on-background": "#151d1e",
+                        "on-tertiary-container": "#fffbff",
+                        "on-tertiary-fixed": "#351000",
+                        "on-surface": "#151d1e",
+                        "inverse-on-surface": "#e9f2f3",
+                        "secondary-container": "#3dc2fd",
+                        "outline": "#717786",
+                        "inverse-primary": "#adc7ff",
+                        "surface-container-highest": "#dbe4e5",
+                        "primary-fixed-dim": "#adc7ff",
+                        "background": "#f2fbfc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "card-gap": "20px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 8px 8px 16px #d1d9da, -8px -8px 16px #ffffff;
+        }
+        .neumorphic-inset {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9da, inset -4px -4px 8px #ffffff;
+        }
+        .soft-glow-primary {
+            box-shadow: 0 0 15px rgba(0, 89, 187, 0.2);
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-transparent px-gutter py-4 flex items-center justify-between">
+<div class="flex flex-col">
+
+<div class="flex items-center gap-3">
+<button class="w-12 h-12 rounded-full neumorphic-raised flex items-center justify-center transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined text-primary" data-icon="arrow_back_ios" style="color: rgb(0, 112, 234); font-size: 24px;">chevron_left</span>
+</button>
+
+</div>
+</div>
+</header>
+<main class="pt-28 pb-32 px-container-padding space-y-8 max-w-lg mx-auto"><div class="neumorphic-raised rounded-[32px] p-6 flex items-center gap-6 mb-8">
+<div class="w-20 h-20 rounded-full neumorphic-raised flex items-center justify-center relative overflow-hidden group">
+  <div class="absolute inset-0 bg-primary/10 group-hover:bg-primary/20 transition-colors"></div>
+  <span class="material-symbols-outlined text-primary text-[40px] relative z-10" style="font-variation-settings: 'FILL' 1, 'wght' 400;">info</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Geräte Informationen</h2>
+
+</div>
+</div>
+<!-- STANDORT SECTION -->
+<section class="space-y-4">
+<h2 class="font-label-sm text-label-sm text-outline uppercase tracking-wider pl-2">STANDORT</h2>
+<div class="neumorphic-raised rounded-[32px] p-2 space-y-1 overflow-hidden">
+<div class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed flex items-center justify-center soft-glow-primary">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Home</p>
+<p class="font-body-lg text-body-lg text-on-surface">Haupthaus</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="h-px bg-outline-variant/30 mx-4"></div>
+<div class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="layers" style="font-variation-settings: 'FILL' 1;">layers</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Etage</p>
+<p class="font-body-lg text-body-lg text-on-surface">Etage 1</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="h-px bg-outline-variant/30 mx-4"></div>
+<div class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-fixed" data-icon="door_front" style="font-variation-settings: 'FILL' 1;">door_front</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Raum</p>
+<p class="font-body-lg text-body-lg text-on-surface">Büro</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+</section>
+<!-- GERÄT SECTION -->
+<section class="space-y-4">
+<h2 class="font-label-sm text-label-sm text-outline uppercase tracking-wider pl-2">GERÄT</h2>
+<div class="neumorphic-raised rounded-[32px] p-2 space-y-1 overflow-hidden">
+<div class="flex items-center justify-between p-4 rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="tablet_android">tablet_android</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Typ</p>
+<p class="font-body-lg text-body-lg text-on-surface">Control Panel</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="h-px bg-outline-variant/30 mx-4"></div>
+<div class="flex items-center justify-between p-4 rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="label">label</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Gerätename</p>
+<p class="font-body-lg text-body-lg text-on-surface">Control Panel</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="h-px bg-outline-variant/30 mx-4"></div>
+<div class="flex items-center justify-between p-4 rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="dns">dns</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Hostname</p>
+<p class="font-body-lg text-body-lg text-on-surface">virtumi-panel-01</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="h-px bg-outline-variant/30 mx-4"></div>
+<div class="flex items-center justify-between p-4 rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="qr_code">qr_code</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Code</p>
+<p class="font-body-lg text-body-lg text-on-surface">VRT-2024-001</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+</section>
+<!-- NETZWERK SECTION -->
+<section class="space-y-4">
+<h2 class="font-label-sm text-label-sm text-outline uppercase tracking-wider pl-2">NETZWERK</h2>
+<div class="neumorphic-raised rounded-[32px] p-2 space-y-1 overflow-hidden">
+<div class="flex items-center justify-between p-4 rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-fixed" data-icon="settings_ethernet">settings_ethernet</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">MAC Adresse</p>
+<p class="font-body-lg text-body-lg text-on-surface font-mono">00:1A:2B:3C:4D:5E</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="h-px bg-outline-variant/30 mx-4"></div>
+<div class="flex items-center justify-between p-4 rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="wifi">wifi</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">IP Adresse</p>
+<p class="font-body-lg text-body-lg text-on-surface font-mono">192.168.1.100</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="h-px bg-outline-variant/30 mx-4"></div>
+<div class="flex items-center justify-between p-4 rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-error-container" data-icon="tag">tag</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Port</p>
+<p class="font-body-lg text-body-lg text-on-surface font-mono">8080</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+</section>
+<!-- KONTO SECTION -->
+<section class="space-y-4">
+<h2 class="font-label-sm text-label-sm text-outline uppercase tracking-wider pl-2">KONTO</h2>
+<div class="neumorphic-raised rounded-[32px] p-2">
+<div class="flex items-center justify-between p-4 rounded-2xl group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="mail" style="font-variation-settings: 'FILL' 1;">mail</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Benutzer E-Mail</p>
+<p class="font-body-lg text-body-lg text-on-surface">j.hbirkou@outlook.de</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-xl flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+</section>
+<!-- BACK BUTTON -->
+<div class="py-4">
+
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">home</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span>
+</button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">bolt</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span>
+</button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">group</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span>
+</button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div>
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('touchstart', function() {
+                this.classList.add('scale-95');
+            });
+            button.addEventListener('touchend', function() {
+                this.classList.remove('scale-95');
+            });
+        });
+
+        // Copy feedback simulation
+        document.querySelectorAll('[data-icon="content_copy"]').forEach(copyBtn => {
+            copyBtn.parentElement.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined');
+                const originalIcon = icon.innerText;
+                icon.innerText = 'check';
+                icon.classList.add('text-green-500');
+                
+                setTimeout(() => {
+                    icon.innerText = originalIcon;
+                    icon.classList.remove('text-green-500');
+                }, 2000);
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

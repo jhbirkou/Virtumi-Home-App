@@ -1,0 +1,384 @@
+<!DOCTYPE html><html class="light" lang="de" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MQTT Cloud - Aura Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "tertiary-container": "#c64f00",
+                        "inverse-primary": "#adc7ff",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#f2fbfc",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "secondary-fixed": "#c3e8ff",
+                        "on-tertiary-fixed": "#351000",
+                        "primary-fixed": "#d8e2ff",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#0059bb",
+                        "surface": "#f2fbfc",
+                        "tertiary": "#9e3d00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#004d69",
+                        "surface-container": "#e7f0f1",
+                        "surface-variant": "#dbe4e5",
+                        "on-surface-variant": "#414754",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#3dc2fd",
+                        "tertiary-fixed": "#ffdbcc",
+                        "primary-container": "#0070ea",
+                        "background": "#f2fbfc",
+                        "surface-dim": "#d3dddd",
+                        "on-tertiary-container": "#fffbff",
+                        "inverse-surface": "#293233",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-background": "#151d1e",
+                        "on-secondary-fixed": "#001e2c",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "on-primary-container": "#fefcff",
+                        "inverse-on-surface": "#e9f2f3",
+                        "on-primary": "#ffffff",
+                        "outline": "#717786",
+                        "primary-fixed-dim": "#adc7ff",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c1c6d7",
+                        "secondary-fixed-dim": "#7ad0ff",
+                        "on-surface": "#151d1e",
+                        "secondary": "#00668a",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001a41",
+                        "surface-tint": "#005bc0",
+                        "surface-container-highest": "#dbe4e5",
+                        "surface-container-low": "#ecf5f6",
+                        "surface-container-high": "#e1eaeb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "unit": "8px",
+                        "container-padding": "24px",
+                        "card-gap": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Geist"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+        }
+
+        .neumorphic-sunken {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        }
+
+        .neumorphic-input {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+            border: none !important;
+            outline: none !important;
+        }
+
+        .primary-glow {
+            box-shadow: 0 10px 20px rgba(0, 89, 187, 0.2);
+        }
+
+        body {
+            background-color: #f2fbfc;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface custom-scrollbar">
+<!-- TopAppBar -->
+<header class="w-full pt-12 px-6 max-w-lg mx-auto">
+<div class="relative flex items-center justify-center w-full mb-6"><button class="absolute left-0 w-10 h-10 flex items-center justify-center rounded-full bg-surface neumorphic-raised hover:scale-105 active:scale-95 transition-all text-primary"><span class="material-symbols-outlined">chevron_left</span></button><div class="text-center"></div><div class="absolute right-0 flex gap-2"><button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface neumorphic-raised hover:scale-105 active:scale-95 transition-all text-primary"><span class="material-symbols-outlined">edit</span></button><button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface neumorphic-raised hover:scale-105 active:scale-95 transition-all text-primary"><span class="material-symbols-outlined">refresh</span></button></div></div></header>
+<main class="pb-40 px-6 max-w-lg mx-auto space-y-10 pb-32"><section class="neumorphic-raised rounded-3xl p-5 flex items-center gap-6" style="transform: scale(1); transition: transform 0.1s ease-out;">
+<div class="relative"><div class="w-20 h-20 rounded-full neumorphic-raised flex items-center justify-center relative overflow-hidden">
+  <div class="absolute inset-0 bg-teal-500/10 blur-md"></div>
+  <div class="w-14 h-14 rounded-full bg-white/40 backdrop-blur-sm flex items-center justify-center border border-white/60 shadow-lg">
+    <span class="material-symbols-outlined text-teal-600 text-4xl" style="font-variation-settings: 'FILL' 1;">hub</span>
+  </div>
+</div></div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold leading-none">MQTT Cloud</h2>
+</div>
+</section><section>
+<div class="neumorphic-raised rounded-3xl p-6 relative overflow-hidden flex items-center border border-white/40" style="transform: scale(1);">
+<div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center relative z-10 border border-primary/5">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">cloud</span>
+</div>
+<div class="flex flex-col gap-1 relative z-10 flex-1 ml-6">
+<span class="font-label-sm text-label-sm text-on-surface-variant/70 uppercase tracking-widest">Verbindungsstatus</span>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-error shadow-[0_0_8px_rgba(186,26,26,0.6)]"></span>
+<span class="font-headline-md text-headline-md font-bold text-on-surface">Getrennt</span>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary/5 blur-2xl rounded-full"></div>
+</div>
+</section>
+<!-- Status Header Card -->
+<!-- MQTT Status Card -->
+<section>
+<div class="flex items-center gap-2 mb-4 px-2">
+<div class="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-emerald-600">settings_remote</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant tracking-widest uppercase">MQTT Status</p>
+</div>
+<div class="neumorphic-raised rounded-3xl p-6 space-y-4" style="transform: scale(1);">
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">MQTT Aktiv</label>
+<div class="relative">
+<select class="neumorphic-sunken w-full p-4 pr-12 rounded-2xl appearance-none text-on-surface font-body-md focus:ring-0 border-0">
+<option selected="">Aktiviert</option>
+<option>Deaktiviert</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- MQTT Server Card -->
+<section>
+<div class="flex items-center gap-2 mb-4 px-2">
+<div class="w-6 h-6 rounded-lg bg-sky-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-sky-600">router</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant tracking-widest uppercase">MQTT Server</p>
+</div>
+<div class="neumorphic-raised rounded-3xl p-6 space-y-6" style="transform: scale(1);">
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">Adresse</label>
+<div class="relative flex items-center">
+<div class="absolute left-3 w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-blue-600">dns</span>
+</div>
+<input class="neumorphic-sunken w-full pl-16 pr-4 py-4 rounded-2xl text-on-surface font-body-md focus:ring-0 border-0" type="text" value="mqtt.virtumi.com">
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">Port</label>
+<div class="relative flex items-center">
+<div class="absolute left-3 w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-amber-600">tag</span>
+</div>
+<input class="neumorphic-sunken w-full pl-16 pr-4 py-4 rounded-2xl text-on-surface font-body-md focus:ring-0 border-0" type="text" value="1883">
+</div>
+</div>
+</div>
+</section>
+<!-- Authentifizierung Card -->
+<section>
+<div class="flex items-center gap-2 mb-4 px-2">
+<div class="w-6 h-6 rounded-lg bg-orange-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-orange-600">security</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant tracking-widest uppercase">Authentifizierung</p>
+</div>
+<div class="neumorphic-raised rounded-3xl p-6 space-y-6" style="transform: scale(1); transition: transform 0.1s ease-out;">
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">Anonyme Verbindung</label>
+<div class="relative">
+<select class="neumorphic-sunken w-full p-4 pr-12 rounded-2xl appearance-none text-on-surface font-body-md focus:ring-0 border-0">
+<option>Ja</option>
+<option selected="">Nein</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">Benutzername</label>
+<div class="relative flex items-center">
+<div class="absolute left-3 w-9 h-9 rounded-xl bg-indigo-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-indigo-600">person</span>
+</div>
+<input class="neumorphic-sunken w-full pl-16 pr-4 py-4 rounded-2xl text-on-surface font-body-md focus:ring-0 border-0" type="text" value="virtumi_user">
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">Passwort</label>
+<div class="relative flex items-center">
+<div class="absolute left-3 w-9 h-9 rounded-xl bg-teal-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-teal-600">lock</span>
+</div>
+<input class="neumorphic-sunken w-full pl-16 pr-14 py-4 rounded-2xl text-on-surface font-body-md focus:ring-0 border-0" type="password" value="password123">
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-primary p-1 hover:bg-surface-variant/30 rounded-full">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- MQTT Einstellungen Card -->
+<section>
+<div class="flex items-center gap-2 mb-4 px-2">
+<div class="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-purple-600">tune</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant tracking-widest uppercase">MQTT Einstellungen</p>
+</div>
+<div class="neumorphic-raised rounded-3xl p-6 space-y-6">
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">QoS Level</label>
+<div class="relative">
+<select class="neumorphic-sunken w-full p-4 pr-12 rounded-2xl appearance-none text-on-surface font-body-md focus:ring-0 border-0">
+<option selected="">0 - At most once</option>
+<option>1 - At least once</option>
+<option>2 - Exactly once</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">Retain Messages</label>
+<div class="relative">
+<select class="neumorphic-sunken w-full p-4 pr-12 rounded-2xl appearance-none text-on-surface font-body-md focus:ring-0 border-0">
+<option selected="">Aktiviert</option>
+<option>Deaktiviert</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-sm px-1 ml-1">Clean Session</label>
+<div class="relative">
+<select class="neumorphic-sunken w-full p-4 pr-12 rounded-2xl appearance-none text-on-surface font-body-md focus:ring-0 border-0">
+<option selected="">Aktiviert</option>
+<option>Deaktiviert</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Save Button -->
+<section class="neumorphic-raised rounded-3xl p-4 flex gap-4">
+  <button class="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl bg-surface neumorphic-raised hover:scale-105 active:scale-95 transition-all">
+    <span class="material-symbols-outlined text-error">cancel</span>
+    <span class="font-body-md font-bold text-on-surface">Abbrechen</span>
+  </button>
+  <button class="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl bg-primary hover:scale-105 active:scale-95 transition-all shadow-lg">
+    <span class="material-symbols-outlined text-emerald-600" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    <span class="font-body-md font-bold text-white">Speichern</span>
+  </button>
+</section>
+
+</main>
+<!-- BottomNavBar - Pill style -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">home</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span>
+</button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">bolt</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span>
+</button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">group</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span>
+</button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div>
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions for inputs to simulate the scale effect
+        document.querySelectorAll('.neumorphic-raised').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Toggle effect for select/input focus
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('focus', () => {
+                const section = el.closest('.neumorphic-raised');
+                if (section) {
+                    section.classList.add('neumorphic-sunken');
+                    section.classList.remove('neumorphic-raised');
+                }
+            });
+            el.addEventListener('blur', () => {
+                const section = el.closest('.neumorphic-sunken');
+                if (section) {
+                    section.classList.remove('neumorphic-sunken');
+                    section.classList.add('neumorphic-raised');
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+</body></html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="light" lang="de" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aura Home - Cloud Settings</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "accent-orange": "#ea580c",
+                    "on-error": "#ffffff",
+                    "accent-purple": "#9333ea",
+                    "on-background": "#151d1e",
+                    "surface-bg": "#f2fbfc",
+                    "primary-fixed": "#d8e2ff",
+                    "on-secondary-fixed-variant": "#004c68",
+                    "outline": "#727785",
+                    "on-secondary-fixed": "#001e2c",
+                    "inverse-surface": "#293233",
+                    "on-tertiary-fixed-variant": "#7b2e00",
+                    "surface-dim": "#d3dcdd",
+                    "secondary-fixed-dim": "#87cff8",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#005bc0",
+                    "surface-bright": "#f2fbfc",
+                    "primary-fixed-dim": "#adc6ff",
+                    "inverse-primary": "#adc6ff",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#ecf5f6",
+                    "secondary-container": "#8dd5fe",
+                    "tertiary": "#9e3e00",
+                    "on-primary-fixed": "#001a41",
+                    "primary-container": "#0070ea",
+                    "surface-container-high": "#e1eaeb",
+                    "on-surface": "#151d1e",
+                    "background": "#f2fbfc",
+                    "inverse-on-surface": "#e9f2f3",
+                    "surface-container": "#e7f0f1",
+                    "on-tertiary-fixed": "#351000",
+                    "accent-green": "#22c55e",
+                    "shadow-dark": "#d1d9e6",
+                    "secondary": "#00668a",
+                    "on-primary-fixed-variant": "#004493",
+                    "on-tertiary": "#ffffff",
+                    "status-error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdbcc",
+                    "shadow-light": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "accent-indigo": "#4f46e5",
+                    "tertiary-container": "#c64f00",
+                    "on-primary-container": "#fdfbff",
+                    "surface-container-highest": "#dbe4e5",
+                    "on-surface-variant": "#414754",
+                    "on-secondary-container": "#005d7e",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#c3e8ff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "outline-variant": "#c1c6d6",
+                    "primary": "#0058bb",
+                    "surface-variant": "#dbe4e5",
+                    "surface": "#f2fbfc",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#fffbff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "card-gap": "20px",
+                    "unit": "8px",
+                    "section-margin": "40px",
+                    "gutter": "16px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-sm": ["Geist"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f2fbfc;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+        }
+        .neumorphic-inset {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        }
+        .neumorphic-header-icon {
+            box-shadow: 4px 4px 8px #d1d9e6, -4px -4px 4px #ffffff;
+        }
+        .glass-nav {
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface min-h-screen flex flex-col items-center custom-scrollbar">
+<!-- TopAppBar -->
+<header class="w-full pt-12 px-6 max-w-lg mx-auto mb-4"><div class="flex justify-between items-center w-full h-12">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface neumorphic-header-icon hover:scale-105 active:scale-95 transition-all text-primary">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+</div></header>
+<!-- Main Content -->
+<main class="w-full max-w-lg px-6 pb-32 flex flex-col gap-6"><div class="bg-surface rounded-3xl p-6 flex items-center gap-6 neumorphic-raised mb-4">
+<div class="w-14 h-14 rounded-full flex items-center justify-center shrink-0">
+<img alt="Cloud Settings Icon" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfhehCwily3os_BYkqrI5JGhIzirlIXStVL_ksmhHT4jGOk4rCEDb3BkgW3lUFzOk7A3OpdiGJLjtVFgLhnxQ_c2_hwsbJA75QZbj5QyTidpVHapRY9dFTECEGv2eOff4zqkLE1Rcj80L7XN0Uk6x-1NDdTi0FI3R3skHxY32pmcUtu7giUJGQ32bdpbT0mw-Cfl_ycSsyyapKQEztBCQXRd_mV38khVuZ819i4aFbwqZFtrrW-QbnlWaBONKhj4FPn4aXiNrPjRQX"/>
+</div>
+<div class="flex-1">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">Cloud Einstellungen</h1>
+</div>
+</div>
+<!-- Virtumi Cloud Option -->
+<div class="bg-surface rounded-3xl p-6 flex items-center gap-4 neumorphic-raised hover:scale-[1.02] transition-transform duration-300 cursor-pointer group" style="transform: scale(1);">
+<div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">cloud</span>
+</div>
+<div class="flex-1">
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface">Virtumi Cloud</h3>
+<p class="text-on-surface-variant text-sm leading-snug">Verbinden Sie Ihr Gerät mit der Virtumi Cloud</p>
+<div class="flex items-center gap-1.5 mt-1">
+<div class="w-2 h-2 rounded-full bg-accent-green shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+<span class="text-xs font-semibold text-accent-green">Verbunden</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<!-- MQTT Cloud Option -->
+<div class="bg-surface rounded-3xl p-6 flex items-center gap-4 neumorphic-raised hover:scale-[1.02] transition-transform duration-300 cursor-pointer group" style="transform: scale(1);">
+<div class="w-14 h-14 rounded-2xl bg-accent-purple/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-accent-purple text-[32px]" style="font-variation-settings: 'FILL' 1;">device_hub</span>
+</div>
+<div class="flex-1">
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface">MQTT Cloud</h3>
+<p class="text-on-surface-variant text-sm leading-snug">Konfigurieren Sie die MQTT Verbindung</p>
+<div class="flex items-center gap-1.5 mt-1">
+<div class="w-2 h-2 rounded-full bg-status-error shadow-[0_0_8px_rgba(186,26,26,0.4)]"></div>
+<span class="text-xs font-semibold text-status-error">Getrennt</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<!-- Info Card -->
+<!-- Device Illustration Grid -->
+<div class="grid grid-cols-2 gap-card-gap mt-4">
+</div>
+<!-- Footer Text -->
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">home</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span>
+</button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">bolt</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span>
+</button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">group</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span>
+</button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div>
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span>
+</button>
+</nav>
+<!-- Interaction Script -->
+<script>
+        document.querySelectorAll('.neumorphic-raised').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

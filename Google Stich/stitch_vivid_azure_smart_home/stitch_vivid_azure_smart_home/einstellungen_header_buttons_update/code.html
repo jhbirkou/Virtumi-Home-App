@@ -1,0 +1,461 @@
+<!DOCTYPE html><html class="light" lang="de" style="width: 390px; height: 2522px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Aura Home - Einstellungen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#7ad0ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001a41",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#151d1e",
+                        "on-background": "#151d1e",
+                        "inverse-primary": "#adc7ff",
+                        "secondary": "#00668a",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#f2fbfc",
+                        "surface": "#f2fbfc",
+                        "primary": "#0059bb",
+                        "tertiary-container": "#c64f00",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-container-low": "#ecf5f6",
+                        "on-primary-container": "#fefcff",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#c3e8ff",
+                        "primary-container": "#0070ea",
+                        "primary-fixed-dim": "#adc7ff",
+                        "on-secondary-fixed": "#001e2c",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "tertiary": "#9e3d00",
+                        "surface-container": "#e7f0f1",
+                        "on-surface-variant": "#414754",
+                        "surface-dim": "#d3dcdd",
+                        "outline": "#717786",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#e9f2f3",
+                        "inverse-surface": "#293233",
+                        "on-primary-fixed-variant": "#004493",
+                        "surface-variant": "#dbe4e5",
+                        "background": "#f2fbfc",
+                        "tertiary-fixed": "#ffdbcc",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c1c6d7",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e1eaeb",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "surface-container-highest": "#dbe4e5",
+                        "on-secondary-container": "#004d69",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "surface-tint": "#005bc0",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-container": "#3dc2fd",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "unit": "8px",
+                        "card-gap": "20px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Geist"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f2fbfc;
+            color: #151d1e;
+        }
+        
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+        }
+
+        .neumorphic-sunken {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        }
+
+        .active-nav-shadow {
+            box-shadow: inset 4px 4px 8px #B2EBF2, inset -4px -4px 8px #FFFFFF;
+        }
+
+        .toggle-switch input:checked + .toggle-bg {
+            background-color: #0070ea;
+            box-shadow: 0 0 10px rgba(0, 112, 234, 0.4);
+        }
+
+        .toggle-switch input:checked + .toggle-bg .toggle-dot {
+            transform: translateX(24px);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .icon-glow-blue { filter: drop-shadow(0 0 4px rgba(0, 123, 255, 0.5)); }
+        .icon-glow-orange { filter: drop-shadow(0 0 4px rgba(255, 123, 0, 0.5)); }
+        .icon-glow-green { filter: drop-shadow(0 0 4px rgba(0, 255, 123, 0.5)); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md min-h-screen custom-scrollbar overflow-x-hidden">
+<!-- Header Section -->
+<header class="w-full px-6 max-w-lg mx-auto pt-6"><div class="flex items-center justify-between mb-8"><button class="w-12 h-12 rounded-full neumorphic-raised flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform" style="transform: scale(1); transition: transform 0.1s ease-out;"><span class="material-symbols-outlined text-blue-600">chevron_left</span></button></div>
+<!-- Profile Card -->
+<section class="neumorphic-raised rounded-3xl p-5 flex items-center gap-6 mb-10" style="transform: scale(1); transition: transform 0.1s ease-out;">
+<div class="relative">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-teal-500/20 flex items-center justify-center shadow-lg"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcLDcpWAG3_Uun9OJ-snQfhbHsC41zSfs3ODa9NZmjIw5QZjthxwC_UgKXmWa25LwsPdy0NasIyPfqshVzG3AQZL790SX3psZjyZ3f4pD6hY_DiuGw6T-lfOuyjiRtGWgGi7eXvsVA4CJ6ygdCfLoxCVdUErWvzPCmxxohVj3hwXa5ia92Yjs1epPQuRg3Ge78NimGryfWuFDIJ4QwWM3xrVXUwCLV0EQhnnH7DvErQ7emdPFK4jVxg8GLLPB-OxEDADrbrCdFK_x7" alt="Settings" class="w-full h-full object-cover rounded-2xl"></div>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold leading-none">Einstellungen</h2>
+</div>
+</section><div class="neumorphic-raised rounded-3xl p-5 flex items-center justify-between mb-10 transition-transform active:scale-95 cursor-pointer" style="transform: scale(1);">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Jalal profile picture" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-sm" data-alt="A professional close-up portrait of a middle-aged man with glasses and a neatly trimmed beard, smiling warmly. He is set against a clean, softly lit studio background with high-key lighting that emphasizes a bright, sophisticated tech professional aesthetic. The skin tones are natural and the overall image quality is sharp and premium, fitting a luxury smart home application's user profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJoSJ8o0BDmi5u8JM2Csyoy-A6I5Rc360j39QwXMOiBEKp2ZeJC0kVf9UvyHpxpqeAhbKJd4vsNJDt_XxbOz-LS2miPF10p1oxOvUQreNaXvP--iOjus1BCKat5dLw6TQcs58rNNdnBHHIQHYNQfEmhJkEBOyhf_qFXYgmkAub9x3UTKXkaeHr3WWwhDSTg_M-mp506YuepIGXHtyr2K17L9mPGPcymbDkIGT-a1YCfruXoHMD7P62JTreL5Mk3MN1lKpQssj3H6ig">
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md leading-none mb-1">Jalal</h2>
+<p class="text-on-surface-variant text-sm mb-2">j.hbirkou@outlook.de</p>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded-full border border-green-200">Besitzer</span>
+<span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold rounded-full border border-blue-200">Pro Plan</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</header>
+<main class="px-6 pb-32 max-w-lg mx-auto space-y-10">
+<!-- DARSTELLUNG Section -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">DARSTELLUNG</p>
+<div class="neumorphic-raised rounded-3xl overflow-hidden divide-y divide-surface-variant" style="transform: scale(1);">
+<div class="flex items-center justify-between p-5 hover:bg-white/40 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center icon-glow-blue">
+<span class="material-symbols-outlined text-indigo-600">dark_mode</span>
+</div>
+<span class="font-body-lg text-body-lg">Dark Mode</span>
+</div>
+<label class="toggle-switch relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox">
+<div class="toggle-bg w-14 h-8 bg-surface-dim rounded-full transition-all duration-300 shadow-inner">
+<div class="toggle-dot absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center">
+</div>
+</div>
+</label>
+</div>
+<div class="flex items-center justify-between p-5 hover:bg-white/40 transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-sky-600">language</span>
+</div>
+<span class="font-body-lg text-body-lg">Sprache</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-on-surface-variant">Deutsch</span>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SICHERHEIT Section -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">SICHERHEIT</p>
+<div class="neumorphic-raised rounded-3xl overflow-hidden divide-y divide-surface-variant" style="transform: scale(1); transition: transform 0.1s ease-out;">
+<div class="flex items-center justify-between p-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center icon-glow-orange">
+<span class="material-symbols-outlined text-orange-600">fingerprint</span>
+</div>
+<span class="font-body-lg text-body-lg">Biometrische Entsperrung</span>
+</div>
+<label class="toggle-switch relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="toggle-bg w-14 h-8 bg-surface-dim rounded-full transition-all duration-300 shadow-inner">
+<div class="toggle-dot absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300"></div>
+</div>
+</label>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600">pin</span>
+</div>
+<span class="font-body-lg text-body-lg">PIN-Code ändern</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600">verified_user</span>
+</div>
+<span class="font-body-lg text-body-lg">Zwei-Faktor-Auth</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-on-surface-variant">Aktiviert</span>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- GERÄTEEINSTELLUNGEN Section -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">GERÄTEEINSTELLUNGEN</p>
+<div class="neumorphic-raised rounded-3xl overflow-hidden divide-y divide-surface-variant" style="transform: scale(1);">
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-blue-600/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600">devices</span>
+</div>
+<span class="font-body-lg text-body-lg">Geräte verwalten</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-on-surface-variant">1 Geräte</span>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-600">layers</span>
+</div>
+<span class="font-body-lg text-body-lg">Gerätegruppen</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-on-surface-variant">0 Gruppen</span>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-teal-600">system_update</span>
+</div>
+<span class="font-body-lg text-body-lg">Auto-Firmware-Update</span>
+</div>
+<label class="toggle-switch relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="toggle-bg w-14 h-8 bg-surface-dim rounded-full transition-all duration-300 shadow-inner">
+<div class="toggle-dot absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300"></div>
+</div>
+</label>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-600">power_settings_new</span>
+</div>
+<span class="font-body-lg text-body-lg text-red-600 font-semibold">Alle Geräte ausschalten</span>
+</div>
+<span class="material-symbols-outlined text-red-400 group-hover:text-red-600 transition-colors">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- VERBINDUNG Section -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">VERBINDUNG</p>
+<div class="neumorphic-raised rounded-3xl p-5 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-blue-400/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-500">wifi</span>
+</div>
+<span class="font-body-lg text-body-lg">Nur über WLAN synchronisieren</span>
+</div>
+<label class="toggle-switch relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox">
+<div class="toggle-bg w-14 h-8 bg-surface-dim rounded-full transition-all duration-300 shadow-inner">
+<div class="toggle-dot absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300"></div>
+</div>
+</label>
+</div>
+</section>
+<!-- APP Section -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">APP</p>
+<div class="neumorphic-raised rounded-3xl overflow-hidden divide-y divide-surface-variant" style="transform: scale(1);">
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-blue-600/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600">cloud_sync</span>
+</div>
+<span class="font-body-lg text-body-lg">Verbindungsart</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-on-surface-variant">Cloud</span>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600">home</span>
+</div>
+<span class="font-body-lg text-body-lg">Startseite</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-on-surface-variant">Übersicht</span>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-amber-600">new_releases</span>
+</div>
+<span class="font-body-lg text-body-lg">Was ist neu</span>
+</div>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-1"></div>
+<span class="text-on-surface-variant">v2.4.1</span>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-yellow-400/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-yellow-600">star</span>
+</div>
+<span class="font-body-lg text-body-lg">App bewerten</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-cyan-600">help_center</span>
+</div>
+<span class="font-body-lg text-body-lg">Hilfe &amp; Support</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-600">policy</span>
+</div>
+<span class="font-body-lg text-body-lg">Datenschutzerklärung</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- BOTTOM KONTO Section -->
+<section>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-4 tracking-widest uppercase px-2">KONTO</p>
+<div class="neumorphic-raised rounded-3xl overflow-hidden divide-y divide-surface-variant" style="transform: scale(1);">
+<div class="flex items-center justify-between p-5 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-stone-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-stone-600">person_edit</span>
+</div>
+<span class="font-body-lg text-body-lg">Profil bearbeiten</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-5 cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-red-600/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-600">logout</span>
+</div>
+<span class="font-body-lg text-body-lg text-red-600 font-semibold">Abmelden</span>
+</div>
+<span class="material-symbols-outlined text-red-400 group-hover:text-red-600">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Footer Text -->
+<footer class="text-center py-6 text-on-surface-variant text-sm opacity-60">
+            Virtumi Home v2.4.1 · © 2026 Virtumi GmbH
+        </footer>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">home</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span></button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">bolt</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span></button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">group</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span></button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2"><div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div><div class="w-12 h-12 flex items-center justify-center mb-1"><div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span></div></div><span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span></button></nav>
+<script>
+        // Micro-interaction for toggle switches
+        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const bg = this.nextElementSibling;
+                if (this.checked) {
+                    bg.classList.add('bg-primary-container');
+                    bg.classList.remove('bg-surface-dim');
+                } else {
+                    bg.classList.remove('bg-primary-container');
+                    bg.classList.add('bg-surface-dim');
+                }
+            });
+        });
+
+        // Click feedback for cards
+        document.querySelectorAll('.neumorphic-raised').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+<div aria-hidden="true" data-snapdom-sandbox="true" id="snapdom-sandbox" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div>
+
+
+
+
+
+
+
+
+
+</body></html>

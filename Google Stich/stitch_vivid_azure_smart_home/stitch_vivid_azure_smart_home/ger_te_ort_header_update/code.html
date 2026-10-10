@@ -1,0 +1,261 @@
+<!DOCTYPE html><html class="light" lang="de" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Aura Home - Geräte Ort</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f2fbfc",
+                    "primary": "#0059bb",
+                    "secondary-fixed": "#c3e8ff",
+                    "secondary-fixed-dim": "#7ad0ff",
+                    "surface": "#f2fbfc",
+                    "inverse-primary": "#adc7ff",
+                    "on-secondary-fixed": "#001e2c",
+                    "on-primary-fixed-variant": "#004493",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#293233",
+                    "surface-tint": "#005bc0",
+                    "inverse-on-surface": "#e9f2f3",
+                    "outline": "#717786",
+                    "on-surface": "#151d1e",
+                    "tertiary-container": "#c64f00",
+                    "surface-variant": "#dbe4e5",
+                    "outline-variant": "#c1c6d7",
+                    "surface-container-low": "#ecf5f6",
+                    "secondary-container": "#3dc2fd",
+                    "on-tertiary-fixed": "#351000",
+                    "on-tertiary-container": "#fffbff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "tertiary": "#9e3d00",
+                    "surface-container-high": "#e1eaeb",
+                    "on-tertiary-fixed-variant": "#7c2e00",
+                    "on-secondary-container": "#004d69",
+                    "primary-fixed-dim": "#adc7ff",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#ffdbcc",
+                    "surface-container": "#e7f0f1",
+                    "on-primary-container": "#fefcff",
+                    "primary-fixed": "#d8e2ff",
+                    "primary-container": "#0070ea",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#414754",
+                    "on-background": "#151d1e",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#dbe4e5",
+                    "surface-dim": "#d3dcdd",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#001a41",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f2fbfc",
+                    "on-secondary-fixed-variant": "#004c69",
+                    "on-error-container": "#93000a",
+                    "secondary": "#00668a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "container-padding": "24px",
+                    "unit": "8px",
+                    "card-gap": "20px"
+            },
+            "fontFamily": {
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Geist"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 6px 6px 12px #dbe4e5, -6px -6px 12px #ffffff;
+            border-radius: 24px;
+        }
+        .neumorphic-inset {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #dbe4e5, inset -4px -4px 8px #ffffff;
+            border-radius: 24px;
+        }
+        .neumorphic-button {
+            background: #f2fbfc;
+            box-shadow: 4px 4px 8px #dbe4e5, -4px -4px 8px #ffffff;
+            transition: all 0.2s ease;
+        }
+        .neumorphic-button:active {
+            box-shadow: inset 2px 2px 5px #dbe4e5, inset -2px -2px 5px #ffffff;
+            transform: scale(0.96);
+        }
+        .map-grid {
+            background-image: 
+                linear-gradient(to right, rgba(0, 89, 187, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 89, 187, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glow-primary {
+            filter: drop-shadow(0 0 8px rgba(0, 123, 255, 0.4));
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen text-on-surface font-body-md overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 pt-6 px-6 flex justify-between items-center bg-transparent"><button class="w-12 h-12 flex items-center justify-center rounded-full neumorphic-button"><span class="material-symbols-outlined text-primary">arrow_back_ios</span></button>
+
+<div class="flex flex-col items-center">
+</div>
+<div class="flex items-center">
+<button class="w-12 h-12 flex items-center justify-center rounded-full neumorphic-button"><span class="material-symbols-outlined text-primary" style="color: rgb(0, 112, 234);">edit</span></button><button class="w-12 h-12 flex items-center justify-center rounded-full neumorphic-button ml-4">
+<span class="material-symbols-outlined text-primary">refresh</span>
+</button>
+</div>
+</header>
+<main class="pt-28 pb-32 px-6 space-y-8 max-w-lg mx-auto"><section class="neumorphic-raised rounded-[32px] p-5 flex items-center gap-6 mb-8">
+<div class="relative">
+<div class="w-16 h-16 rounded-2xl flex items-center justify-center bg-tertiary/5 neumorphic-inset border-2 border-white/60">
+<span class="material-symbols-outlined text-tertiary scale-125" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold leading-none mb-1">Geräte Ort</h2>
+</div>
+</section>
+<!-- Map View Section -->
+<!-- Hierarchy Section -->
+<section class="space-y-4">
+<h2 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Hierarchie</h2>
+<div class="neumorphic-raised p-6 space-y-6 relative">
+<!-- Vertical Line -->
+<div class="absolute left-12 top-14 bottom-14 w-0.5 bg-gradient-to-b from-primary/20 via-primary/40 to-primary/20 rounded-full"></div>
+<!-- House -->
+<div class="flex items-center gap-6 relative z-10">
+<div class="w-12 h-12 rounded-2xl neumorphic-inset flex items-center justify-center bg-primary/5">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Haus</p>
+<p class="text-body-lg font-body-lg text-on-surface">Hauptgebäude</p>
+</div>
+</div>
+<!-- Floor -->
+<div class="flex items-center gap-6 relative z-10">
+<div class="w-12 h-12 rounded-2xl neumorphic-inset flex items-center justify-center bg-secondary/5">
+<span class="material-symbols-outlined text-secondary text-2xl" style="font-variation-settings: 'FILL' 1;">layers</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Etage</p>
+<p class="text-body-lg font-body-lg text-on-surface">Erdgeschoss</p>
+</div>
+</div>
+<!-- Room -->
+<div class="flex items-center gap-6 relative z-10">
+<div class="w-12 h-12 rounded-2xl neumorphic-inset flex items-center justify-center bg-tertiary/5">
+<span class="material-symbols-outlined text-tertiary text-2xl" style="font-variation-settings: 'FILL' 1;">door_open</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Raum</p>
+<p class="text-body-lg font-body-lg text-on-surface">Wohnzimmer</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Device Detail Section -->
+<section class="space-y-4">
+<h2 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Gerät</h2>
+<div class="neumorphic-raised p-5 flex items-center justify-between group cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-2xl neumorphic-inset flex items-center justify-center overflow-hidden relative">
+<div class="absolute inset-0 bg-primary/10 opacity-50"></div>
+<span class="material-symbols-outlined text-primary text-3xl relative z-10 glow-primary">power</span>
+</div>
+<div>
+<h3 class="text-body-lg font-body-lg text-on-surface">Steckdose Wohnzimmer</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Smart Plug • ID: DEV-00142</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</section>
+<section class="neumorphic-raised rounded-[32px] p-6 flex gap-4">
+<button class="flex-1 h-14 flex items-center justify-center gap-2 rounded-2xl bg-white border border-white/60 shadow-sm hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-error">close</span>
+<span class="font-semibold text-on-surface">Abbrechen</span>
+</button>
+<button class="flex-1 h-14 flex items-center justify-center gap-2 rounded-2xl bg-primary text-white shadow-lg hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-accent-green" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-semibold">Speichern</span>
+</button>
+</section></main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">home</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span>
+</button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">bolt</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span>
+</button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">group</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span>
+</button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div>
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span>
+</button>
+</nav>
+<!-- Image Asset Description (Off-screen) -->
+<div class="hidden">
+<img data-alt="A highly detailed, minimalist isometric 3D representation of a smart home device layout on a soft aqua surface. The scene features glowing LED light strips coiled in a hexagonal pattern, sleek metallic smart blinds, and a stack of semi-transparent glass sensor modules with colorful glowing indicators. The aesthetic is futuristic and sophisticated, using soft neomorphic shadows and premium material textures to create a sense of quiet technological intelligence and serenity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_Okn99BdNV3R4GriiKfnD33TOX4OO_hQST4vX4zJAtjvHgHUXbBBTFfxoVIbbbaBTWVjiThU3Ou997JypfFefS1ad6Ftx9mtAj8D9KgP_MkR9qzq1B_tR2bjop22WdXGZchi9Le9H2CcoIGzj29VT3qXJP4BhKnziryfY_09oylyZiNn6dD15XCu7dPPadlO0gYjFKK_oWEAjnJl0V8_EP614FxUNc6x4YJ0hXako3tE2MFkR39uYEDlDBuO1R8A6aRdcNiS7V8pp">
+<img data-alt="An elegant, modern glassmorphic navigation bar floating against a blurred interior background of a luxury smart home. The icons represent Home, Scenes, People, and Settings, rendered with vibrant 3D isometric details and soft ambient glows. The lighting is warm and inviting, highlighting the physical tactility of the interface with deep blurs and subtle tonal shifts that emphasize a premium, weightless aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb0BAqQAYL4IcUAsDKBv0Zz0VlFyJjnZNP74MnPxxgCkQ6WDAOwx55LkGCedgbWoMsgwyymHLiVhn6okTu3CsXODbi5pn8AiEBOx4j_1Qk-SkCwtl1TgaTH6GXFvUwXiFoDZK41mkyTN3g4yL8fqwCYUsdDolqGsD4FVHMuYi0bIKwPUrcRjjoScpIGArSbwga3pADg9W0ujWMvGp553Ao9cKEHAJ5RdFgtlM9C71JWizle8cYEh2OwJmJfCwElsW3lqdVCTNYYq7f">
+</div>
+
+
+
+
+
+
+
+
+</body></html>

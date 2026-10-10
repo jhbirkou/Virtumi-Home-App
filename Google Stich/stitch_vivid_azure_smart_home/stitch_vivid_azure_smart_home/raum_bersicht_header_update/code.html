@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="de" style="width: 390px; height: 799px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Aura Home - Raum-Übersicht</title>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            aura: {
+              background: '#f2fbfc',
+              surface: '#f2fbfc',
+              primary: '#0070ea',
+              text: '#1a202c',
+              muted: '#718096',
+            }
+          },
+          boxShadow: {
+            'aura-flat': '6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff',
+            'aura-pressed': 'inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff',
+            'aura-soft': '4px 4px 10px rgba(0, 0, 0, 0.05), -4px -4px 10px rgba(255, 255, 255, 0.8)',
+            'aura-blue': '0 10px 15px -3px rgba(0, 112, 234, 0.3), 0 4px 6px -2px rgba(0, 112, 234, 0.1)',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="neumorphic-utility">
+    .neumorphic-card {
+      background: #f2fbfc;
+      border-radius: 2rem;
+      box-shadow: 10px 10px 20px #d1d9e6, -10px -10px 20px #ffffff;
+    }
+    .neumorphic-btn {
+      background: #f2fbfc;
+      box-shadow: 4px 4px 8px #d1d9e6, -4px -4px 8px #ffffff;
+      transition: all 0.2s ease;
+    }
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px #d1d9e6, inset -3px -3px 6px #ffffff;
+    }
+    .neumorphic-btn-active {
+      background: #0070ea;
+      box-shadow: 4px 4px 10px rgba(0, 112, 234, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.8);
+      color: white;
+    }
+    .bottom-nav-container {
+      background: #f2fbfc;
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.03), 10px 10px 20px #d1d9e6, -10px -10px 20px #ffffff;
+    }
+  </style>
+</head>
+<body class="bg-aura-background font-sans text-aura-text min-h-screen flex flex-col items-center p-4">
+<!-- BEGIN: MainHeader -->
+<header class="w-full max-w-md mt-4 mb-6 flex items-center justify-between px-2" data-purpose="header-navigation">
+<!-- Back Button -->
+<button aria-label="Zurück" class="w-10 h-10 rounded-full flex items-center justify-center neumorphic-btn">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- Title Area -->
+<div class="text-center">
+
+
+</div>
+<!-- Edit/Settings Button -->
+<button aria-label="Einstellungen" class="w-10 h-10 rounded-full flex items-center justify-center neumorphic-btn">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="w-full max-w-md flex-1 space-y-8 pb-32"><section class="neumorphic-card p-6 flex items-center gap-6" data-purpose="room-header-card">
+  <div class="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 shadow-aura-blue">
+    <img src="https://lh3.googleusercontent.com/aida/AP1WRLtfmHws7_aeV7SfELxuKdrMWjniulE6Z6Tlin6XzFdkiOb2mCGFmfeKNC17kGiVu6UybjlRaOZ5PgLzkcx1OMYK4MHBa8bghA69Z3SY2EZ1SqmXA-mojB-515pmhIvNyep_feBrdXnNQ6x0A75SqGy_K6TrhpXeYBrjkjUq8G_zDxcnJ5rcBd4UtO8ADtfP8HesY6Jd9Qxc6AYOzkO45_UNFG4_rx5jwnlXm4W8QPJGjzjFoL0yIB2vjMM_" alt="Büro Icon" class="w-full h-full object-cover">
+  </div>
+  <div class="flex flex-col">
+    
+    <h1 class="font-bold text-2xl leading-tight text-aura-text">Büro</h1>
+  </div>
+</section>
+<!-- Control Panel Card -->
+<section class="neumorphic-card p-6" data-purpose="device-card-control-panel">
+<!-- Card Header -->
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 bg-aura-primary rounded-2xl flex items-center justify-center text-white shadow-aura-blue">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h2 class="font-bold text-sm leading-tight">My Control Panel</h2>
+<p class="text-[10px] text-aura-muted">Control Panel</p>
+</div>
+</div>
+<div class="flex space-x-3">
+<button class="w-10 h-10 rounded-full flex items-center justify-center neumorphic-btn text-aura-muted opacity-60">
+<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" fill-rule="evenodd"></path>
+</svg>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-aura-primary text-white shadow-aura-blue">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Navigation Controls -->
+<div class="flex justify-around items-end" data-purpose="directional-controls">
+<!-- Links -->
+<div class="flex flex-col items-center space-y-3">
+<button class="w-16 h-16 rounded-full flex items-center justify-center neumorphic-btn">
+<svg class="h-6 w-6 text-aura-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<span class="text-[10px] font-medium text-aura-muted">Links</span>
+</div>
+<!-- Mitte (Active) -->
+<div class="flex flex-col items-center space-y-3">
+<button class="w-20 h-20 rounded-full flex items-center justify-center neumorphic-btn-active">
+<div class="w-5 h-5 rounded-full border-2 border-white opacity-80"></div>
+</button>
+<span class="text-[10px] font-bold text-aura-text">Mitte</span>
+</div>
+<!-- Rechts -->
+<div class="flex flex-col items-center space-y-3">
+<button class="w-16 h-16 rounded-full flex items-center justify-center neumorphic-btn">
+<svg class="h-6 w-6 text-aura-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<span class="text-[10px] font-medium text-aura-muted">Rechts</span>
+</div>
+</div>
+</section>
+<!-- Additional Device/Summary Card (Conceptualized for Room View) -->
+<section class="grid grid-cols-2 gap-6" data-purpose="secondary-devices">
+<div class="neumorphic-card p-5 flex flex-col items-start space-y-3">
+<div class="w-10 h-10 rounded-xl flex items-center justify-center neumorphic-btn text-aura-primary">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-aura-muted">Licht</p>
+<h3 class="font-bold">An</h3>
+</div>
+</div>
+<div class="neumorphic-card p-5 flex flex-col items-start space-y-3">
+<div class="w-10 h-10 rounded-xl flex items-center justify-center neumorphic-btn text-aura-primary">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-aura-muted">Temp</p>
+<h3 class="font-bold">22.5°C</h3>
+</div>
+</div>
+</section>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: BottomNavigation -->
+
+<!-- END: BottomNavigation -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center relative group px-2"><div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div><div class="w-12 h-12 flex items-center justify-center mb-1"><div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">home</span></div></div><span class="font-label-sm text-label-sm text-primary font-bold">Home</span></button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">bolt</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span></button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">group</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span></button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">settings</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Einstellungen</span></button></nav></body></html>

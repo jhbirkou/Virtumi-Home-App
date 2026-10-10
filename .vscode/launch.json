@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Virtumi Home (Debug)",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define=SUPABASE_URL=https://vaornyvqpipgzrgbfyre.supabase.co",
+        "--dart-define=SUPABASE_ANON_KEY=YOUR_ANON_KEY_HERE"
+      ]
+    }
+  ]
+}

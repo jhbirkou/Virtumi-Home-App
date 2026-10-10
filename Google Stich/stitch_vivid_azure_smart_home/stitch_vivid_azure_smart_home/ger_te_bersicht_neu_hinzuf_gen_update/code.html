@@ -1,0 +1,329 @@
+<!DOCTYPE html><html class="light" lang="de" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Geräte-Übersicht</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-tertiary-fixed": "#351000",
+                "accent-purple": "#9333ea",
+                "tertiary-container": "#c64f00",
+                "surface-dim": "#d3dcdd",
+                "background": "#f2fbfc",
+                "surface-container-lowest": "#ffffff",
+                "on-error-container": "#93000a",
+                "surface-bright": "#f2fbfc",
+                "on-tertiary-fixed-variant": "#7b2e00",
+                "outline-variant": "#c1c6d6",
+                "error-container": "#ffdad6",
+                "error": "#ba1a1a",
+                "surface-bg": "#f2fbfc",
+                "on-primary-fixed": "#001a41",
+                "on-secondary-container": "#005d7e",
+                "on-primary-fixed-variant": "#004493",
+                "shadow-dark": "#d1d9e6",
+                "outline": "#727785",
+                "inverse-surface": "#293233",
+                "on-error": "#ffffff",
+                "on-secondary-fixed": "#001e2c",
+                "surface-variant": "#dbe4e5",
+                "secondary-fixed-dim": "#87cff8",
+                "on-secondary-fixed-variant": "#004c68",
+                "tertiary": "#9e3e00",
+                "tertiary-fixed": "#ffdbcc",
+                "primary-container": "#0070ea",
+                "inverse-on-surface": "#e9f2f3",
+                "on-background": "#151d1e",
+                "on-tertiary-container": "#fffbff",
+                "secondary-fixed": "#c3e8ff",
+                "accent-green": "#22c55e",
+                "secondary-container": "#8dd5fe",
+                "accent-orange": "#ea580c",
+                "on-surface": "#151d1e",
+                "on-surface-variant": "#414754",
+                "tertiary-fixed-dim": "#ffb695",
+                "accent-indigo": "#4f46e5",
+                "on-tertiary": "#ffffff",
+                "primary-fixed-dim": "#adc6ff",
+                "on-secondary": "#ffffff",
+                "secondary": "#00668a",
+                "primary": "#0058bb",
+                "surface": "#f2fbfc",
+                "surface-tint": "#005bc0",
+                "shadow-light": "#ffffff",
+                "primary-fixed": "#d8e2ff",
+                "on-primary-container": "#fdfbff",
+                "surface-container": "#e7f0f1",
+                "status-error": "#ba1a1a",
+                "surface-container-low": "#ecf5f6",
+                "inverse-primary": "#adc6ff",
+                "surface-container-highest": "#dbe4e5",
+                "surface-container-high": "#e1eaeb",
+                "on-primary": "#ffffff"
+        },
+        "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "section-margin": "40px",
+                "gutter": "16px",
+                "container-padding": "24px",
+                "card-gap": "20px",
+                "unit": "8px"
+        },
+        "fontFamily": {
+                "headline-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "label-sm": [
+                        "Geist"
+                ]
+        },
+        "fontSize": {
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "36px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: #f2fbfc;
+            color: #151d1e;
+        }
+        
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+        }
+
+        .neumorphic-sunken {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        }
+
+        .neumorphic-button {
+            background: #f2fbfc;
+            box-shadow: 4px 4px 8px #d1d9e6, -4px -4px 8px #ffffff;
+            border-radius: 9999px;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .neumorphic-button:active {
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        }
+
+        .led-glow {
+            box-shadow: 0 0 15px rgba(0, 112, 234, 0.4);
+        }
+
+        .icon-glow-blue { filter: drop-shadow(0 0 4px rgba(0, 112, 234, 0.5)); }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-background min-h-screen pb-24 overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-container-padding py-unit w-full sticky top-0 z-40 bg-surface/80 backdrop-blur-md shadow-sm transition-all duration-300 ease-in-out max-w-lg mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden neumorphic-raised flex items-center justify-center">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A realistic, high-quality portrait photo of a user for a profile avatar. The person has a friendly expression. The lighting is soft and natural, fitting a modern smart home app context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlvpv4pbu6fYaFRl8ONeMNz1UEUKyPptBgWR0UoNtTIco6CQ_3sQLOSqhuJXzJNxuUODWw8aeJTbxMKNwfPE9ag4-bp_E_iocydYoNPck1cM9gw4Fw05S3EHYgOwMlgWOz7Hie4upTw-u1RxanzzYMdpKYDSn_V2oU8CGfP5oojdoNrTQN4Du1jo2Px-kKLf9OZSq8T5yGrOktnGHcPlndA2nS-XiyTB4eBY8PR4O3OGZrTymm1QLRlB-NpxzlFgc51HBh2UTlGOPs">
+</div>
+<div>
+<p class="font-body-md text-sm text-on-surface-variant">Hi, Jalal!</p>
+<div class="flex items-center gap-2">
+<h1 class="font-headline-md text-lg font-bold text-on-surface">Direct (UDP)</h1>
+<div class="w-2 h-2 rounded-full bg-primary-container led-glow"></div>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full neumorphic-button flex items-center justify-center text-on-surface-variant hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<main class="px-container-padding pt-6 space-y-8 max-w-lg mx-auto"><section class="neumorphic-raised rounded-3xl p-4 flex items-center gap-4 cursor-pointer active:scale-95 transition-all">
+<div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-primary icon-glow-blue">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg text-body-lg text-on-surface font-semibold">Neues Gerät hinzufügen</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Gerät im Netzwerk suchen</p>
+</div>
+<div class="w-10 h-10 rounded-full neumorphic-button flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">add</span>
+</div>
+</section>
+<!-- Main Overview Card -->
+<!-- Meine Häuser Section -->
+<section>
+<div class="flex justify-between items-center mb-4 px-2">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">MEINE HÄUSER</h3>
+<button class="font-body-md text-body-md text-on-surface-variant flex items-center hover:text-primary transition-colors">
+                    Alle <span class="material-symbols-outlined text-sm ml-1">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-card-gap">
+<!-- Home Card -->
+<div class="neumorphic-raised rounded-3xl p-5 flex flex-col h-40 relative group cursor-pointer active:scale-95 transition-all duration-300" style="transform: scale(1);">
+<div class="flex justify-between items-start mb-auto">
+<div class="w-10 h-10 rounded-xl bg-blue-500/10 text-primary flex items-center justify-center icon-glow-blue">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface font-bold">Home</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant font-normal">0 Geräte · 0 Räume</p>
+</div>
+</div>
+<!-- Add Card -->
+
+</div>
+</section>
+<!-- Letzte Aktivitäten Section -->
+<section>
+<div class="flex justify-between items-center mb-4 px-2">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">LETZTE AKTIVITÄTEN</h3>
+<button class="font-body-md text-body-md text-on-surface-variant flex items-center hover:text-primary transition-colors">
+                    Alle <span class="material-symbols-outlined text-sm ml-1">chevron_right</span>
+</button>
+</div>
+<div class="neumorphic-raised rounded-3xl p-8 flex flex-col items-center justify-center text-center" style="transform: scale(1);">
+<div class="w-16 h-16 rounded-full bg-surface-variant/50 flex items-center justify-center text-outline mb-4">
+<span class="material-symbols-outlined text-3xl">history</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Noch keine Aktivitäten</p>
+</div>
+</section>
+<!-- Verknüpfte Personen Section -->
+<section>
+<div class="neumorphic-raised rounded-3xl p-4 flex items-center gap-4 cursor-pointer active:scale-95 transition-all" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary icon-glow-blue">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg text-body-lg text-on-surface font-semibold">Verknüpfte Personen</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Keine Personen verknüpft</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div>
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Home</span>
+</button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">bolt</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span>
+</button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">group</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span>
+</button>
+<!-- Einstellungen -->
+<button class="flex flex-col items-center justify-center group px-2">
+<div class="w-12 h-12 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface-variant/70">settings</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70">Einstellungen</span>
+</button>
+</nav>
+<script>
+        // Click feedback for cards
+        document.querySelectorAll('.neumorphic-raised, .neumorphic-button').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+</script>
+
+
+</body></html>

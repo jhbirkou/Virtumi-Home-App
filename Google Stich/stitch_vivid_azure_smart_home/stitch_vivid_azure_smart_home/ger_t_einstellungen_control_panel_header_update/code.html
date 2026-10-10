@@ -1,0 +1,308 @@
+<!DOCTYPE html><html class="light" lang="de" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Gerät Einstellungen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-surface": "#151d1e",
+                "surface-bg": "#f2fbfc",
+                "on-background": "#151d1e",
+                "tertiary-fixed-dim": "#ffb695",
+                "shadow-dark": "#d1d9e6",
+                "status-error": "#ba1a1a",
+                "primary-fixed-dim": "#adc6ff",
+                "surface-container": "#e7f0f1",
+                "on-secondary-container": "#005d7e",
+                "on-error-container": "#93000a",
+                "accent-green": "#22c55e",
+                "secondary-container": "#8dd5fe",
+                "background": "#f2fbfc",
+                "tertiary-fixed": "#ffdbcc",
+                "surface-dim": "#d3dcdd",
+                "shadow-light": "#ffffff",
+                "primary-container": "#0070ea",
+                "surface-bright": "#f2fbfc",
+                "on-tertiary": "#ffffff",
+                "outline-variant": "#c1c6d6",
+                "surface": "#f2fbfc",
+                "surface-container-low": "#ecf5f6",
+                "on-tertiary-container": "#fffbff",
+                "on-secondary-fixed": "#001e2c",
+                "accent-indigo": "#4f46e5",
+                "surface-container-lowest": "#ffffff",
+                "accent-orange": "#ea580c",
+                "secondary-fixed": "#c3e8ff",
+                "primary": "#0058bb",
+                "tertiary-container": "#c64f00",
+                "on-primary-fixed": "#001a41",
+                "surface-tint": "#005bc0",
+                "surface-container-high": "#e1eaeb",
+                "secondary": "#00668a",
+                "secondary-fixed-dim": "#87cff8",
+                "on-error": "#ffffff",
+                "on-primary-container": "#fdfbff",
+                "error": "#ba1a1a",
+                "tertiary": "#9e3e00",
+                "on-tertiary-fixed-variant": "#7b2e00",
+                "error-container": "#ffdad6",
+                "primary-fixed": "#d8e2ff",
+                "on-tertiary-fixed": "#351000",
+                "surface-container-highest": "#dbe4e5",
+                "inverse-on-surface": "#e9f2f3",
+                "on-primary-fixed-variant": "#004493",
+                "inverse-surface": "#293233",
+                "on-surface-variant": "#414754",
+                "on-primary": "#ffffff",
+                "accent-purple": "#9333ea",
+                "inverse-primary": "#adc6ff",
+                "outline": "#727785",
+                "on-secondary-fixed-variant": "#004c68",
+                "surface-variant": "#dbe4e5",
+                "on-secondary": "#ffffff"
+        },
+        "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "container-padding": "24px",
+                "gutter": "16px",
+                "section-margin": "40px",
+                "card-gap": "20px",
+                "unit": "8px"
+        },
+        "fontFamily": {
+                "label-sm": [
+                        "Geist"
+                ],
+                "headline-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-lg": [
+                        "Plus Jakarta Sans"
+                ]
+        },
+        "fontSize": {
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "36px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "500"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: #f2fbfc;
+            color: #151d1e;
+            min-height: max(884px, 100dvh);
+        }
+        
+        .neumorphic-raised {
+            background: #f2fbfc;
+            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+            transition: transform 0.1s ease-out;
+        }
+        
+        .neumorphic-inset {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+        }
+
+        .icon-glow-blue { filter: drop-shadow(0 0 4px rgba(0, 123, 255, 0.5)); }
+        .icon-glow-indigo { filter: drop-shadow(0 0 4px rgba(79, 70, 229, 0.5)); }
+        .icon-glow-sky { filter: drop-shadow(0 0 4px rgba(14, 165, 233, 0.5)); }
+        .icon-glow-teal { filter: drop-shadow(0 0 4px rgba(20, 184, 166, 0.5)); }
+        .icon-glow-cyan { filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.5)); }
+        .icon-glow-orange { filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.5)); }
+        .icon-glow-purple { filter: drop-shadow(0 0 4px rgba(147, 51, 234, 0.5)); }
+        .icon-glow-green { filter: drop-shadow(0 0 4px rgba(34, 197, 94, 0.5)); }
+        .icon-glow-red { filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.5)); }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen text-on-surface font-body-md custom-scrollbar overflow-x-hidden">
+<!-- Header Section -->
+<header class="w-full px-6 max-w-lg mx-auto flex items-start gap-4 pt-6"><div class="flex items-center justify-between w-full mb-6"><button class="w-12 h-12 rounded-full neumorphic-raised flex items-center justify-center group transition-all duration-300" data-stitch-orig-opacity="0"><span class="material-symbols-outlined text-primary">arrow_back</span></button><div class="flex gap-4"><button class="w-12 h-12 rounded-full neumorphic-raised flex items-center justify-center group transition-all duration-300"><span class="material-symbols-outlined text-primary">edit</span></button><button class="w-12 h-12 rounded-full neumorphic-raised flex items-center justify-center group transition-all duration-300"><span class="material-symbols-outlined text-primary">refresh</span></button></div></div></header>
+<main class="px-6 max-w-lg mx-auto pb-32"><section class="mb-10 p-6 rounded-[2rem] neumorphic-raised flex items-center gap-6 cursor-pointer" style="transform: scale(1);">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-teal-500/20 flex items-center justify-center shadow-lg">
+<div class="w-12 h-12 rounded-xl bg-white/40 backdrop-blur-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-headline-md" style="font-variation-settings: 'FILL' 1;">settings_suggest</span>
+</div>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface leading-tight">Gerät Einstellungen</h2>
+
+</div>
+</section>
+<!-- Status Card -->
+
+<!-- Settings Grid (3x4ish) -->
+<div class="grid grid-cols-3 gap-6">
+<!-- 1. Geräte Info -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center icon-glow-blue">
+<span class="material-symbols-outlined text-blue-600">info</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Geräte Info</span>
+</button>
+<!-- 2. Datum & Uhrzeit -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center icon-glow-indigo">
+<span class="material-symbols-outlined text-indigo-600">schedule</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Datum &amp;<br>Uhrzeit</span>
+</button>
+<!-- 3. Netzwerk -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center icon-glow-blue">
+<span class="material-symbols-outlined text-blue-500">wifi</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Netzwerk</span>
+</button>
+<!-- 4. Parameter -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-teal-500/10 flex items-center justify-center icon-glow-teal">
+<span class="material-symbols-outlined text-teal-600">tune</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Parameter</span>
+</button>
+<!-- 5. Cloud -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-sky-500/10 flex items-center justify-center icon-glow-sky">
+<span class="material-symbols-outlined text-sky-500">cloud</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Cloud</span>
+</button>
+<!-- 6. Geräte Ort -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center icon-glow-orange">
+<span class="material-symbols-outlined text-orange-500">location_on</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Geräte Ort</span>
+</button>
+<!-- 7. Update -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center icon-glow-indigo">
+<span class="material-symbols-outlined text-indigo-700">download</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Update</span>
+</button>
+<!-- 8. Matter -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center icon-glow-cyan">
+<span class="material-symbols-outlined text-cyan-600">radio</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Matter</span>
+</button>
+<!-- 9. Allgemeine -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center icon-glow-blue">
+<span class="material-symbols-outlined text-blue-600">settings</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Allgemeine</span>
+</button>
+<!-- 10. Passwort ändern -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-blue-700/10 flex items-center justify-center icon-glow-blue">
+<span class="material-symbols-outlined text-blue-700">lock</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant leading-tight">Passwort ändern</span>
+</button>
+<!-- 11. Löschen -->
+<button class="flex flex-col items-center gap-3 py-6 px-2 rounded-[2rem] neumorphic-raised cursor-pointer group" style="transform: scale(1);">
+<div class="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center icon-glow-red">
+<span class="material-symbols-outlined text-red-600">delete</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-red-600 leading-tight font-bold">Löschen</span>
+</button>
+</div>
+</main>
+<!-- Floating Bottom Navigation Bar (Glassmorphic Pill) -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300"><button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">home</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span></button><button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">bolt</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span></button><button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">group</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span></button><button class="flex flex-col items-center justify-center relative group px-2"><div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div><div class="w-12 h-12 flex items-center justify-center mb-1"><div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span></div></div><span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span></button></nav>
+<script>
+        // Micro-interaction for buttons
+        document.querySelectorAll('.neumorphic-raised').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+</body></html>

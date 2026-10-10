@@ -1,0 +1,289 @@
+<!DOCTYPE html><html class="light" lang="de" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Geist:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Neumorphic Shadows - Light Mode */
+        .neu-raised {
+            background: #f2fbfc;
+            box-shadow: 6px 6px 12px #d9e2e3, -6px -6px 12px #ffffff;
+        }
+        
+        .neu-sunken {
+            background: #f2fbfc;
+            box-shadow: inset 4px 4px 8px #d9e2e3, inset -4px -4px 8px #ffffff;
+        }
+
+        .neu-card-primary {
+            background: #e7f0f1;
+            box-shadow: 8px 8px 16px #d1d9da, -8px -8px 16px #fdffff;
+        }
+
+        /* Ambient Glow for Active Primary */
+        .glow-primary {
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+        }
+
+        body {
+            background-color: #f2fbfc;
+            color: #151d1e;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#dbe4e5",
+                        "surface-container-highest": "#dbe4e5",
+                        "surface-container-high": "#e1eaeb",
+                        "on-primary-container": "#fefcff",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#9e3d00",
+                        "outline-variant": "#c1c6d7",
+                        "primary-container": "#0070ea",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-surface": "#151d1e",
+                        "primary": "#0059bb",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#adc7ff",
+                        "secondary-container": "#3dc2fd",
+                        "background": "#f2fbfc",
+                        "secondary-fixed": "#c3e8ff",
+                        "secondary-fixed-dim": "#7ad0ff",
+                        "on-background": "#151d1e",
+                        "inverse-on-surface": "#e9f2f3",
+                        "tertiary-container": "#c64f00",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "on-secondary-container": "#004d69",
+                        "surface": "#f2fbfc",
+                        "primary-fixed-dim": "#adc7ff",
+                        "outline": "#717786",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#ecf5f6",
+                        "surface-container": "#e7f0f1",
+                        "primary-fixed": "#d8e2ff",
+                        "on-tertiary-fixed": "#351000",
+                        "inverse-surface": "#293233",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d3dcdd",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-bright": "#f2fbfc",
+                        "surface-tint": "#005bc0",
+                        "on-secondary-fixed": "#001e2c",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#fffbff",
+                        "on-primary-fixed": "#001a41",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#414754",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#00668a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "unit": "8px",
+                        "card-gap": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Geist"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md min-h-screen custom-scrollbar overflow-x-hidden bg-surface">
+<!-- Top App Bar -->
+
+<main class="px-container-padding space-y-card-gap max-w-2xl mx-auto pb-32 mt-2"><div class="flex items-center justify-between mb-6">
+  <button class="w-12 h-12 flex items-center justify-center neu-raised rounded-full text-primary active:scale-95 transition-transform"><span class="material-symbols-outlined">arrow_back</span></button>
+  <div class="flex gap-4"><button class="w-12 h-12 flex items-center justify-center neu-raised rounded-full text-primary active:scale-95 transition-transform"><span class="material-symbols-outlined">edit</span></button>
+    <button class="w-12 h-12 flex items-center justify-center neu-raised rounded-full text-primary active:scale-95 transition-transform"><span class="material-symbols-outlined">refresh</span></button></div>
+</div><div class="bg-surface rounded-3xl p-6 flex items-center gap-4 shadow-[8px_8px_16px_#d1d9da,-8px_-8px_16px_#fdffff]">
+<div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary scale-125" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Mein Profil</h2>
+
+</div>
+</div>
+<!-- Profile Hero Section -->
+<section class="neumorphic-raised rounded-3xl p-8 flex flex-col items-center space-y-4 mb-10">
+<div class="relative group">
+<div class="w-24 h-24 rounded-2xl overflow-hidden border-2 border-white shadow-sm">
+<img alt="Jalal" class="w-full h-full object-cover" data-alt="A professional and friendly portrait of a man named Jalal with dark hair, glasses, and a neatly groomed beard. He is wearing a sophisticated blue blazer over a crisp white shirt, posing against a clean, minimal background. The lighting is soft and flattering, emphasizing a premium smart home app aesthetic with soft tones and high clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ11trSIHayb0kNa6aKhzBS6SwDxJdPxtE428LaCI6xz2EYnDYbaZI2tTYWf0h_AV2cuupC07j_W0NBpHytA1_HJNePEPMi_NR8ztFKX9Lt_ksuec5NzZP3MqlVLJaNxLl6WsOctMOlbhdGqUauKB3UHPrMccfkyIlNBJDFtVxSDkOkywltyPWJaqvNJSdhJB1x_lq_KAUQQZsVckuUhR1AtKUEorbBs11FriMrlzpPZDaKg7YdxbC7Fgrg4RlO9s2nh_YoPXVWNCU">
+</div>
+<!-- Status Indicator -->
+<div class="absolute top-1 left-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+<!-- Camera Edit Icon -->
+<button class="absolute bottom-0 right-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white shadow-lg transform translate-x-1 translate-y-1 hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[18px]" data-icon="photo_camera">photo_camera</span>
+</button>
+</div>
+<div class="text-center">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Jalal</h2>
+<p class="font-body-md text-on-surface-variant opacity-70">j.hbirkou@outlook.de</p>
+</div>
+<div class="flex flex-wrap justify-center gap-2"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded-full border border-green-200">Besitzer</span><span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold rounded-full border border-blue-200">Pro Plan</span><span class="px-2 py-0.5 bg-surface-variant text-on-surface-variant text-[10px] font-bold rounded-full border border-outline-variant">Verifiziert</span></div>
+</section>
+<!-- Stats Grid -->
+<section class="grid grid-cols-3 gap-4">
+<div class="neumorphic-raised rounded-3xl p-4 text-center aspect-square flex flex-col justify-center transition-transform active:scale-95">
+<span class="font-headline-md text-headline-md text-primary">1</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Häuser</span>
+</div>
+<div class="neumorphic-raised rounded-3xl p-4 text-center aspect-square flex flex-col justify-center transition-transform active:scale-95">
+<span class="font-headline-md text-headline-md text-primary">1</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Geräte</span>
+</div>
+<div class="neumorphic-raised rounded-3xl p-4 text-center aspect-square flex flex-col justify-center transition-transform active:scale-95">
+<span class="font-headline-md text-headline-md text-primary">0</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Szenen</span>
+</div>
+</section>
+<!-- Account Information Section -->
+<section class="space-y-4"><h3 class="font-label-sm text-label-sm text-on-surface-variant/60 px-2 tracking-[0.1em]">KONTOINFORMATIONEN</h3>
+<div class="neu-raised rounded-xl overflow-hidden divide-y divide-surface-variant/30">
+<!-- Email Item -->
+<div class="flex items-center p-4 gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-12 h-12 flex items-center justify-center neu-sunken rounded-xl text-primary glow-primary">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+<div class="flex-1">
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">E-MAIL-ADRESSE</p>
+<p class="font-body-md text-on-surface">j.hbirkou@outlook.de</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Phone Item -->
+<div class="flex items-center p-4 gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-12 h-12 flex items-center justify-center neu-sunken rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="smartphone">smartphone</span>
+</div>
+<div class="flex-1">
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">TELEFONNUMMER</p>
+<p class="font-body-md text-outline-variant">Nicht hinterlegt</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- 2FA Item -->
+<div class="flex items-center p-4 gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-12 h-12 flex items-center justify-center neu-sunken rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</div>
+<div class="flex-1">
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">ZWEI-FAKTOR-AUTH</p>
+<p class="font-body-md text-on-surface">Aktiviert</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Member Since Item -->
+<div class="flex items-center p-4 gap-4">
+<div class="w-12 h-12 flex items-center justify-center neu-sunken rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</div>
+<div class="flex-1">
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">MITGLIED SEIT</p>
+<p class="font-body-md text-on-surface">April 2026</p>
+</div>
+</div>
+</div></section>
+<!-- Danger Zone Actions -->
+<section class="space-y-4"><div class="neu-raised rounded-xl p-4 flex items-center gap-4 hover:bg-red-50/10 transition-colors cursor-pointer group active:scale-[0.98]">
+<div class="w-12 h-12 flex items-center justify-center neu-sunken rounded-xl text-error">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+</div>
+<div class="flex-1">
+<p class="font-body-lg text-error">Abmelden</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Sitzung beenden</p>
+</div>
+<span class="material-symbols-outlined text-error/30 group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="neu-raised rounded-xl p-4 flex items-center gap-4 hover:bg-red-50 transition-colors cursor-pointer group active:scale-[0.98]">
+<div class="w-12 h-12 flex items-center justify-center neu-sunken rounded-xl text-error">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</div>
+<div class="flex-1">
+<p class="font-body-lg text-error">Konto löschen</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Konto dauerhaft entfernen</p>
+</div>
+<span class="material-symbols-outlined text-error/30 group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div></section>
+<!-- Footer Info -->
+<footer class="text-center py-6">
+<p class="font-label-sm text-label-sm text-on-surface-variant/40">Virtumi Home v2.4.1 · © 2026 Virtumi GmbH</p>
+</footer>
+</main>
+<!-- Navigation Shell (BottomNavBar) -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center p-3 bg-white/40 backdrop-blur-xl shadow-lg rounded-full border border-white/60 transition-all duration-300">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">home</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Home</span></button>
+<!-- Szenen -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">bolt</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Szenen</span></button>
+<!-- Personen -->
+<button class="flex flex-col items-center justify-center group px-2"><div class="w-12 h-12 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-on-surface-variant/70">group</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/70">Personen</span></button>
+<!-- Einstellungen (Active) -->
+<button class="flex flex-col items-center justify-center relative group px-2"><div class="absolute inset-0 bg-primary/20 rounded-full blur-md -z-10 scale-125"></div><div class="w-12 h-12 flex items-center justify-center mb-1"><div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</span></div></div><span class="font-label-sm text-label-sm text-primary font-bold">Einstellungen</span></button></nav>
+<script>
+        // Micro-interaction: Active ripple effect on cards
+        document.querySelectorAll('.neu-raised').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.classList.remove('neu-raised');
+                card.classList.add('neu-sunken');
+            });
+            card.addEventListener('mouseup', () => {
+                card.classList.add('neu-raised');
+                card.classList.remove('neu-sunken');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.add('neu-raised');
+                card.classList.remove('neu-sunken');
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+</body></html>
