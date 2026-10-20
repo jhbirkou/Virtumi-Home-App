@@ -113,7 +113,7 @@ Map<String, dynamic> generalUdpWritePayload(
     'protocol_nr': 6,
     'reply_protocol': 6,
     'code': deviceCode,
-    'mode': 1,
+    'mode': commandTypeToMode(config.commandType),
     'led_state': ledStateToInt(config.ledStatus),
     'rgb_color_r': (color >> 16) & 0xFF,
     'rgb_color_g': (color >> 8) & 0xFF,
@@ -238,6 +238,25 @@ int ledStateToInt(LedStatus status) {
   };
 }
 
+/// 1 = jeden Tag, 2 = Montag bis Freitag, 3 = nur Wochenende, 4 = bestimmter Tag.
+CommandType commandTypeFromMode(int? mode) {
+  return switch (mode) {
+    2 => CommandType.weekdays,
+    3 => CommandType.weekend,
+    4 => CommandType.specificDay,
+    _ => CommandType.everyday,
+  };
+}
+
+int commandTypeToMode(CommandType type) {
+  return switch (type) {
+    CommandType.everyday => 1,
+    CommandType.weekdays => 2,
+    CommandType.weekend => 3,
+    CommandType.specificDay => 4,
+  };
+}
+
 GeneralConfig mapGeneralConfig(Map<String, dynamic>? row) {
   if (row == null) return const GeneralConfig();
 
@@ -253,6 +272,7 @@ GeneralConfig mapGeneralConfig(Map<String, dynamic>? row) {
     ledColorValue: color,
     brightness: row['brightness'] as int? ?? 80,
     ledStatus: ledStateFromInt(row['led_state'] as int?),
+    commandType: commandTypeFromMode(row['mode'] as int?),
     startTime: start != null && start.length >= 5 ? start.substring(0, 5) : '18:00',
     endTime: end != null && end.length >= 5 ? end.substring(0, 5) : '23:00',
     specificDate: row['cmd_date'] as String?,
@@ -262,8 +282,9 @@ GeneralConfig mapGeneralConfig(Map<String, dynamic>? row) {
 Map<String, dynamic> generalConfigPayload(
   String deviceId,
   String userId,
-  GeneralConfig config,
-) {
+  GeneralConfig config, {
+  bool includeMode = true,
+}) {
   final color = config.ledColorValue;
   return {
     'device_id': deviceId,
@@ -273,6 +294,7 @@ Map<String, dynamic> generalConfigPayload(
     'rgb_color_b': color & 0xFF,
     'brightness': config.brightness,
     'led_state': ledStateToInt(config.ledStatus),
+    if (includeMode) 'mode': commandTypeToMode(config.commandType),
     'cmd_start': '${config.startTime}:00',
     'cmd_end': '${config.endTime}:00',
     if (config.specificDate != null) 'cmd_date': config.specificDate,

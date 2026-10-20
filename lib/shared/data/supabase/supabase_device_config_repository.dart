@@ -96,14 +96,9 @@ class SupabaseDeviceConfigRepository implements DeviceConfigRepository {
   }
 
   @override
-  Future<void> saveCloudConfig(String deviceId, CloudConfig config) async {
+  Future<void> saveMqttCloud(String deviceId, MqttCloudConfig config) async {
     final userId = requireUserId(_client);
-    await _upsert(
-      'device_virtumi_cloud_settings',
-      virtumiCloudPayload(deviceId, userId, config.virtumi),
-    );
-
-    final mqttPayload = mqttCloudPayload(deviceId, userId, config.mqtt);
+    final mqttPayload = mqttCloudPayload(deviceId, userId, config);
     final existing = await _client
         .from('device_mqtt_settings')
         .select('id')
@@ -119,6 +114,25 @@ class SupabaseDeviceConfigRepository implements DeviceConfigRepository {
           .eq('device_id', deviceId);
     }
   }
+
+  @override
+  Future<void> saveVirtumiCloud(
+    String deviceId,
+    VirtumiCloudConfig config,
+  ) async {
+    final userId = requireUserId(_client);
+    await _upsert(
+      'device_virtumi_cloud_settings',
+      virtumiCloudPayload(deviceId, userId, config),
+    );
+  }
+
+  @override
+  Future<void> resendVirtumiCloud(
+    String deviceId,
+    VirtumiCloudConfig config,
+  ) =>
+      saveVirtumiCloud(deviceId, config);
 
   @override
   Future<DateTimeConfig> getDateTimeConfig(String deviceId) async {
@@ -254,6 +268,14 @@ class SupabaseDeviceConfigRepository implements DeviceConfigRepository {
     final smartLed = await _isSmartLed(deviceId);
     final table =
         smartLed ? 'smart_led_general_settings' : 'cp_general_settings';
-    await _upsert(table, generalConfigPayload(deviceId, userId, config));
+    await _upsert(
+      table,
+      generalConfigPayload(
+        deviceId,
+        userId,
+        config,
+        includeMode: !smartLed,
+      ),
+    );
   }
 }

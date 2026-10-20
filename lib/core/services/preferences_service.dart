@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../shared/models/app_settings.dart';
 
 /// Thin wrapper around [SharedPreferences] for persisting global app settings.
 ///
@@ -15,6 +19,7 @@ class PreferencesService {
   static const String _recentDeviceIdsKey = 'recent_device_ids';
   static const String _recentHouseIdsKey = 'recent_house_ids';
   static const String _startRouteKeyPrefix = 'start_route_';
+  static const String _appSettingsKeyPrefix = 'app_settings_';
 
   static const int maxRecentDevices = 3;
   static const int maxRecentHouses = 2;
@@ -55,6 +60,56 @@ class PreferencesService {
 
   Future<void> setStartRouteForUser(String userId, String route) {
     return _prefs.setString('$_startRouteKeyPrefix$userId', route);
+  }
+
+  /// Device-local app settings for [userId]. Dark mode comes from [themeMode].
+  AppSettings loadAppSettings(String userId) {
+    final stored = _readAppSettingsMap(userId);
+    final legacyStart = startRouteForUser(userId);
+    return AppSettings(
+      userId: userId,
+      darkMode: themeMode == ThemeMode.dark,
+      language: stored?['language'] as String? ?? 'de',
+      biometricEnabled: stored?['biometricEnabled'] as bool? ?? false,
+      pinEnabled: stored?['pinEnabled'] as bool? ?? false,
+      twoFactorEnabled: stored?['twoFactorEnabled'] as bool? ?? false,
+      connectionMode: stored?['connectionMode'] as String? ?? 'cloud',
+      startRoute: stored?['startRoute'] as String? ??
+          (legacyStart != null && legacyStart.isNotEmpty
+              ? legacyStart
+              : '/home'),
+    );
+  }
+
+  /// True once [pinEnabled] was written locally (not inferred from a PIN hash).
+  bool hasStoredPinEnabled(String userId) {
+    return _readAppSettingsMap(userId)?.containsKey('pinEnabled') ?? false;
+  }
+
+  Future<void> saveAppSettings(AppSettings settings) async {
+    final payload = <String, Object>{
+      'language': settings.language,
+      'biometricEnabled': settings.biometricEnabled,
+      'pinEnabled': settings.pinEnabled,
+      'twoFactorEnabled': settings.twoFactorEnabled,
+      'connectionMode': settings.connectionMode,
+      'startRoute': settings.startRoute,
+    };
+    await _prefs.setString(
+      '$_appSettingsKeyPrefix${settings.userId}',
+      jsonEncode(payload),
+    );
+    await setThemeMode(settings.darkMode ? ThemeMode.dark : ThemeMode.light);
+    await setStartRouteForUser(settings.userId, settings.startRoute);
+  }
+
+  Map<String, dynamic>? _readAppSettingsMap(String userId) {
+    final raw = _prefs.getString('$_appSettingsKeyPrefix$userId');
+    if (raw == null || raw.isEmpty) return null;
+    final decoded = jsonDecode(raw);
+    if (decoded is Map<String, dynamic>) return decoded;
+    if (decoded is Map) return Map<String, dynamic>.from(decoded);
+    return null;
   }
 }
 

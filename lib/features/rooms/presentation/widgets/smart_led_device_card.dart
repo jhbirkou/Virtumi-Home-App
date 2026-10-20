@@ -279,50 +279,46 @@ class _SmartLedDeviceCardState extends ConsumerState<SmartLedDeviceCard> {
               ),
               if (widget.showEffectPicker) ...[
                 const SizedBox(height: AppSpacing.md),
-                Semantics(
-                  button: true,
-                  label: 'Effekt: ${effect.name}',
-                  child: InkWell(
-                    onTap: () => _pickEffect(strip),
+                PressScale(
+                  onTap: () => _pickEffect(strip),
+                  semanticLabel: 'Effekt: ${effect.name}',
+                  child: NeumorphicContainer(
+                    style: NeumorphicStyle.sunken,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.gutter,
+                    ),
                     borderRadius: AppRadius.mdAll,
-                    child: NeumorphicContainer(
-                      style: NeumorphicStyle.sunken,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md,
-                        vertical: AppSpacing.gutter,
-                      ),
-                      borderRadius: AppRadius.mdAll,
-                      child: Row(
-                        children: [
-                          IconBox(
-                            icon: Symbols.auto_awesome,
-                            color: context.palette.accentPurple,
-                            size: 36,
+                    child: Row(
+                      children: [
+                        IconBox(
+                          icon: Symbols.auto_awesome,
+                          color: context.palette.accentPurple,
+                          size: 36,
+                        ),
+                        const SizedBox(width: AppSpacing.gutter),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Effekt',
+                                style: DeviceCardTextStyles.caption(context),
+                              ),
+                              Text(
+                                effect.name,
+                                style: DeviceCardTextStyles.subtitle(context),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: AppSpacing.gutter),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Effekt',
-                                  style: DeviceCardTextStyles.caption(context),
-                                ),
-                                Text(
-                                  effect.name,
-                                  style: DeviceCardTextStyles.subtitle(context),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Icon(
-                            Symbols.chevron_right,
-                            color: context.colors.onSurfaceVariant,
-                          ),
-                        ],
-                      ),
+                        ),
+                        Icon(
+                          Symbols.chevron_right,
+                          color: context.colors.onSurfaceVariant,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -448,7 +444,7 @@ class _CompactIntFieldState extends State<_CompactIntField> {
   }
 }
 
-class _LedPowerButton extends StatefulWidget {
+class _LedPowerButton extends StatelessWidget {
   const _LedPowerButton({
     required this.isOn,
     required this.onPressed,
@@ -460,20 +456,13 @@ class _LedPowerButton extends StatefulWidget {
   final bool enabled;
 
   @override
-  State<_LedPowerButton> createState() => _LedPowerButtonState();
-}
-
-class _LedPowerButtonState extends State<_LedPowerButton> {
-  bool _pressed = false;
-
-  @override
   Widget build(BuildContext context) {
     final amber = context.palette.accentAmber;
-    final label = widget.isOn ? 'LED ausschalten' : 'LED einschalten';
-    final icon = widget.isOn ? Symbols.lightbulb : Symbols.light_off;
-    final fg = widget.isOn ? Colors.white : context.colors.onSurface;
+    final label = isOn ? 'LED ausschalten' : 'LED einschalten';
+    final icon = isOn ? Symbols.lightbulb : Symbols.light_off;
+    final fg = isOn ? Colors.white : context.colors.onSurface;
 
-    final decoration = widget.isOn
+    final decoration = isOn
         ? BoxDecoration(
             gradient: LinearGradient(
               colors: [amber, context.palette.accentOrange],
@@ -499,93 +488,66 @@ class _LedPowerButtonState extends State<_LedPowerButton> {
                 context.palette.flatElevation ? null : context.palette.raised,
           );
 
-    return Semantics(
-      button: true,
-      label: label,
-      child: GestureDetector(
-        onTap: widget.enabled ? widget.onPressed : null,
-        onTapDown: widget.enabled ? (_) => setState(() => _pressed = true) : null,
-        onTapUp: widget.enabled ? (_) => setState(() => _pressed = false) : null,
-        onTapCancel: widget.enabled ? () => setState(() => _pressed = false) : null,
-        child: AnimatedScale(
-          scale: _pressed ? 0.97 : 1.0,
-          duration: const Duration(milliseconds: 120),
-          curve: Curves.easeOut,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeInOut,
-            height: 48,
-            decoration: decoration,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, color: fg, size: 22, fill: widget.isOn ? 1 : 0),
-                const SizedBox(width: AppSpacing.sm),
-                Text(
-                  label,
-                  style: context.text.bodyMedium?.copyWith(
-                    color: fg,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
+    return PressScale(
+      enabled: enabled,
+      onTap: enabled ? onPressed : null,
+      semanticLabel: label,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeInOut,
+        height: 48,
+        decoration: decoration,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: fg, size: 22, fill: isOn ? 1 : 0),
+            const SizedBox(width: AppSpacing.sm),
+            Text(
+              label,
+              style: context.text.bodyMedium?.copyWith(
+                color: fg,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _PrimaryNavButton extends StatefulWidget {
+class _PrimaryNavButton extends StatelessWidget {
   const _PrimaryNavButton({required this.onPressed});
 
   final VoidCallback onPressed;
 
   @override
-  State<_PrimaryNavButton> createState() => _PrimaryNavButtonState();
-}
-
-class _PrimaryNavButtonState extends State<_PrimaryNavButton> {
-  bool _pressed = false;
-
-  @override
   Widget build(BuildContext context) {
     final primary = context.colors.primary;
 
-    return Semantics(
-      button: true,
-      label: 'Gerätedetails',
-      child: GestureDetector(
-        onTap: widget.onPressed,
-        onTapDown: (_) => setState(() => _pressed = true),
-        onTapUp: (_) => setState(() => _pressed = false),
-        onTapCancel: () => setState(() => _pressed = false),
-        child: AnimatedScale(
-          scale: _pressed ? 0.92 : 1.0,
-          duration: const Duration(milliseconds: 120),
-          curve: Curves.easeOut,
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: primary,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: primary.withValues(alpha: 0.35),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+    return PressScale(
+      style: PressScaleStyle.compact,
+      onTap: onPressed,
+      semanticLabel: 'Gerätedetails',
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: primary,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: primary.withValues(alpha: 0.35),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
             ),
-            alignment: Alignment.center,
-            child: Icon(
-              Symbols.arrow_forward,
-              color: context.colors.onPrimary,
-              size: 20,
-            ),
-          ),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Icon(
+          Symbols.arrow_forward,
+          color: context.colors.onPrimary,
+          size: 20,
         ),
       ),
     );

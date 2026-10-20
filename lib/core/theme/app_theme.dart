@@ -113,6 +113,57 @@ class AppTheme {
         scrolledUnderElevation: 0,
         foregroundColor: onSurface,
       ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: ButtonStyle(
+          overlayColor: _buttonOverlay(
+            scheme,
+            pressed: scheme.onPrimary.withValues(alpha: 0.18),
+            hovered: scheme.onPrimary.withValues(alpha: 0.08),
+          ),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          overlayColor: _buttonOverlay(
+            scheme,
+            pressed: scheme.primary.withValues(alpha: 0.16),
+            hovered: scheme.primary.withValues(alpha: 0.08),
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          overlayColor: _buttonOverlay(
+            scheme,
+            pressed: scheme.primary.withValues(alpha: 0.14),
+            hovered: scheme.primary.withValues(alpha: 0.06),
+          ),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          overlayColor: _buttonOverlay(
+            scheme,
+            pressed: scheme.onSurface.withValues(alpha: 0.12),
+            hovered: scheme.onSurface.withValues(alpha: 0.06),
+          ),
+        ),
+      ),
     );
+  }
+
+  static WidgetStateProperty<Color?> _buttonOverlay(
+    ColorScheme scheme, {
+    required Color pressed,
+    required Color hovered,
+  }) {
+    return WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.pressed)) return pressed;
+      if (states.contains(WidgetState.hovered)) return hovered;
+      if (states.contains(WidgetState.focused)) {
+        return hovered.withValues(alpha: hovered.a * 0.8);
+      }
+      return null;
+    });
   }
 }

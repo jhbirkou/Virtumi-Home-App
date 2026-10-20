@@ -18,8 +18,9 @@ class DeviceInfoPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceAsync = ref.watch(deviceProvider(deviceId));
     final isDirect = ref.watch(isDirectConnectionProvider);
-    final udpInfoAsync =
-        isDirect ? ref.watch(deviceUdpLiveInfoProvider(deviceId)) : null;
+    final udpInfoAsync = isDirect
+        ? ref.watch(deviceUdpLiveInfoProvider(deviceId))
+        : null;
     final p = context.palette;
 
     Future<void> refresh() async {
@@ -37,7 +38,9 @@ class DeviceInfoPage extends ConsumerWidget {
         data: (device) {
           if (device == null) {
             return const EmptyState(
-                icon: Symbols.error, message: 'Gerät nicht gefunden');
+              icon: Symbols.error,
+              message: 'Gerät nicht gefunden',
+            );
           }
 
           final udpInfo = udpInfoAsync?.value;
@@ -85,10 +88,7 @@ class DeviceInfoPage extends ConsumerWidget {
                     iconColor: p.accentIndigo,
                     value: typeLabel,
                   ),
-                  _DeviceCodeRow(
-                    code: code,
-                    iconColor: p.accentTeal,
-                  ),
+                  _DeviceCodeRow(code: code, iconColor: p.accentTeal),
                 ],
               ),
               const AppSectionLabel('System'),
@@ -104,7 +104,17 @@ class DeviceInfoPage extends ConsumerWidget {
                     icon: Symbols.system_update,
                     title: 'Firmware',
                     iconColor: p.accentGreen,
-                    value: device.firmwareVersion,
+                    value: device.firmwareVersion.isEmpty
+                        ? '—'
+                        : device.firmwareVersion,
+                  ),
+                  SettingsRow.navigation(
+                    icon: Symbols.barcode,
+                    title: 'Seriennummer',
+                    iconColor: p.accentAmber,
+                    value: device.hardwareSerial.isEmpty
+                        ? '—'
+                        : device.hardwareSerial,
                   ),
                   SettingsRow.navigation(
                     icon: Symbols.lan,
@@ -147,8 +157,8 @@ class _DeviceCodeRowState extends State<_DeviceCodeRow> {
     final display = !hasCode
         ? '—'
         : _obscured
-            ? '•' * widget.code.length
-            : widget.code;
+        ? '•' * widget.code.length
+        : widget.code;
 
     return SettingsRow(
       icon: Symbols.tag,

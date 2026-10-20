@@ -1,36 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../models/app_settings.dart';
-
-AppSettings appSettingsFromRow(Map<String, dynamic> row) {
-  return AppSettings(
-    userId: row['user_id'] as String,
-    darkMode: row['dark_mode'] as bool? ?? false,
-    language: row['language'] as String? ?? 'de',
-    biometricEnabled: row['biometric_enabled'] as bool? ?? false,
-    pinEnabled: row['pin_enabled'] as bool? ?? false,
-    twoFactorEnabled: row['two_factor_enabled'] as bool? ?? false,
-    connectionMode: row['connection_mode'] as String? ?? 'cloud',
-    startRoute: row['start_route'] as String? ?? '/home',
-  );
-}
-
-Map<String, dynamic> appSettingsToRow(
-  AppSettings settings, {
-  bool includeStartRoute = true,
-}) {
-  return {
-    'user_id': settings.userId,
-    'dark_mode': settings.darkMode,
-    'language': settings.language,
-    'biometric_enabled': settings.biometricEnabled,
-    'pin_enabled': settings.pinEnabled,
-    'two_factor_enabled': settings.twoFactorEnabled,
-    'connection_mode': settings.connectionMode,
-    if (includeStartRoute) 'start_route': settings.startRoute,
-  };
-}
-
 UserProfileFields profileFieldsFromRow(Map<String, dynamic> row) {
   return UserProfileFields(
     firstName: row['first_name'] as String? ?? '',

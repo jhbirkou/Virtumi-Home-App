@@ -6,10 +6,8 @@ import '../../shared/providers/data_providers.dart';
 import '../../shared/providers/repository_providers.dart';
 import '../navigation/start_route_providers.dart';
 import '../navigation/start_route_support.dart';
-import '../services/preferences_service.dart';
-import '../services/theme_controller.dart';
 
-/// Loads [appSettingsProvider] after login and syncs theme + start route.
+/// Loads [appSettingsProvider] after login and applies the local start route.
 class AppSettingsBootstrap extends ConsumerStatefulWidget {
   const AppSettingsBootstrap({super.key, required this.child});
 
@@ -21,8 +19,6 @@ class AppSettingsBootstrap extends ConsumerStatefulWidget {
 }
 
 class _AppSettingsBootstrapState extends ConsumerState<AppSettingsBootstrap> {
-  String? _syncedUserId;
-
   @override
   Widget build(BuildContext context) {
     final session = Supabase.instance.client.auth.currentSession;
@@ -34,16 +30,6 @@ class _AppSettingsBootstrapState extends ConsumerState<AppSettingsBootstrap> {
             return;
           }
 
-          if (_syncedUserId != session.user.id) {
-            _syncedUserId = session.user.id;
-            final prefs = ref.read(preferencesServiceProvider);
-            if (prefs.hasStoredThemeMode) {
-              await ref
-                  .read(themeModeControllerProvider.notifier)
-                  .toggleDarkMode(settings.darkMode);
-            }
-          }
-
           final repo = ref.read(smartHomeRepositoryProvider);
           final validated =
               await StartRouteSupport.validate(repo, settings.startRoute);
@@ -52,8 +38,6 @@ class _AppSettingsBootstrapState extends ConsumerState<AppSettingsBootstrap> {
           ref.read(routerRedirectTriggerProvider).refresh();
         });
       });
-    } else {
-      _syncedUserId = null;
     }
 
     return widget.child;

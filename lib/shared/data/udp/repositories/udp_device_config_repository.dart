@@ -97,31 +97,43 @@ class UdpDeviceConfigRepository implements DeviceConfigRepository {
   }
 
   @override
-  Future<void> saveCloudConfig(String deviceId, CloudConfig config) async {
+  Future<void> saveMqttCloud(String deviceId, MqttCloudConfig config) async {
     final ep = await _endpoints.resolve(deviceId);
-    final userId = requireUserId(_client);
-
-    if (config.virtumi.account.isNotEmpty) {
-      await _udp.sendCloudCredentials(
-        targetIp: ep.ipAddress,
-        port: ep.port,
-        deviceCode: ep.deviceCode,
-        userEmail: config.virtumi.account,
-        userPassword: config.virtumi.password,
-        userId: userId,
-        active: config.virtumi.enabled,
-      );
-    }
-
     await _udp.writeMqtt(
       targetIp: ep.ipAddress,
       port: ep.port,
       payload: mqttCloudUdpWritePayload(
         deviceCode: ep.deviceCode,
-        config: config.mqtt,
+        config: config,
       ),
     );
   }
+
+  @override
+  Future<void> saveVirtumiCloud(
+    String deviceId,
+    VirtumiCloudConfig config,
+  ) async {
+    if (config.account.isEmpty) return;
+    final ep = await _endpoints.resolve(deviceId);
+    final userId = requireUserId(_client);
+    await _udp.sendCloudCredentials(
+      targetIp: ep.ipAddress,
+      port: ep.port,
+      deviceCode: ep.deviceCode,
+      userEmail: config.account,
+      userPassword: config.password,
+      userId: userId,
+      active: config.enabled,
+    );
+  }
+
+  @override
+  Future<void> resendVirtumiCloud(
+    String deviceId,
+    VirtumiCloudConfig config,
+  ) =>
+      saveVirtumiCloud(deviceId, config);
 
   @override
   Future<DateTimeConfig> getDateTimeConfig(String deviceId) async {

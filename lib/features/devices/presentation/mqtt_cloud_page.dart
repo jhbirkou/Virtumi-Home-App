@@ -76,15 +76,15 @@ class _MqttCloudPageState extends ConsumerState<MqttCloudPage> {
     );
   }
 
-  Future<void> _persistMqtt(CloudConfig cloud, MqttCloudConfig mqtt) async {
+  Future<void> _persistMqtt(MqttCloudConfig mqtt) async {
     await ref
         .read(deviceConfigRepositoryProvider)
-        .saveCloudConfig(widget.deviceId, cloud.copyWith(mqtt: mqtt));
+        .saveMqttCloud(widget.deviceId, mqtt);
     ref.invalidate(cloudConfigProvider(widget.deviceId));
   }
 
   Future<void> _save(CloudConfig cloud) async {
-    await _persistMqtt(cloud, _buildConfig(cloud.mqtt));
+    await _persistMqtt(_buildConfig(cloud.mqtt));
     if (mounted) setState(() => _editing = false);
   }
 
@@ -143,7 +143,6 @@ class _MqttCloudPageState extends ConsumerState<MqttCloudPage> {
     });
 
     await _persistMqtt(
-      cloud,
       cloud.mqtt.copyWith(status: ConnectionStatus.connecting),
     );
 
@@ -159,7 +158,7 @@ class _MqttCloudPageState extends ConsumerState<MqttCloudPage> {
       _resetting = false;
     });
 
-    await _persistMqtt(cloud, cloud.mqtt.copyWith(status: nextStatus));
+    await _persistMqtt(cloud.mqtt.copyWith(status: nextStatus));
   }
 
   @override
@@ -193,7 +192,9 @@ class _MqttCloudPageState extends ConsumerState<MqttCloudPage> {
               ConnectionStatusCard(
                 status: _status,
                 title: 'Broker Status',
-                onReset: () => _resetBroker(cloud),
+                onReset: _status == ConnectionStatus.disconnected
+                    ? () => _resetBroker(cloud)
+                    : null,
               ),
               const AppSectionLabel('Verbindung'),
               GroupedListCard(

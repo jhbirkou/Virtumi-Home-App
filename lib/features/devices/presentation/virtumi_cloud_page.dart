@@ -26,6 +26,8 @@ class _VirtumiCloudPageState extends ConsumerState<VirtumiCloudPage> {
   bool _obscure = true;
   bool _enabled = true;
   bool _initialized = false;
+  bool _resending = false;
+  ConnectionStatus? _statusOverride;
 
   @override
   void dispose() {
@@ -50,7 +52,7 @@ class _VirtumiCloudPageState extends ConsumerState<VirtumiCloudPage> {
     );
     await ref
         .read(deviceConfigRepositoryProvider)
-        .saveCloudConfig(widget.deviceId, cloud.copyWith(virtumi: updated));
+        .saveVirtumiCloud(widget.deviceId, updated);
     ref.invalidate(cloudConfigProvider(widget.deviceId));
     if (mounted) setState(() => _editing = false);
   }
@@ -59,6 +61,33 @@ class _VirtumiCloudPageState extends ConsumerState<VirtumiCloudPage> {
     _initialized = false;
     _hydrate(config);
     setState(() => _editing = false);
+  }
+
+  Future<void> _resend(CloudConfig cloud) async {
+    if (_resending) return;
+    setState(() {
+      _resending = true;
+      _statusOverride = ConnectionStatus.connecting;
+    });
+    try {
+      await ref
+          .read(deviceConfigRepositoryProvider)
+          .resendVirtumiCloud(widget.deviceId, cloud.virtumi);
+      ref.invalidate(cloudConfigProvider(widget.deviceId));
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Senden fehlgeschlagen: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _resending = false;
+          _statusOverride = null;
+        });
+      }
+    }
   }
 
   @override
@@ -77,6 +106,7 @@ class _VirtumiCloudPageState extends ConsumerState<VirtumiCloudPage> {
         onRetry: () => ref.invalidate(cloudConfigProvider(widget.deviceId)),
         data: (cloud) {
           _hydrate(cloud.virtumi);
+          final status = _statusOverride ?? cloud.virtumi.status;
           return AppScrollView(
             children: [
               const SectionHeaderCard(
@@ -86,8 +116,11 @@ class _VirtumiCloudPageState extends ConsumerState<VirtumiCloudPage> {
                 filled: true,
               ),
               ConnectionStatusCard(
-                status: cloud.virtumi.status,
+                status: status,
                 title: _enabled ? 'Cloud aktiv' : 'Cloud deaktiviert',
+                onReset: status == ConnectionStatus.disconnected
+                    ? () => _resend(cloud)
+                    : null,
               ),
               const AppSectionLabel('Konto'),
               GroupedListCard(

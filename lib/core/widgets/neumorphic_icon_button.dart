@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 import 'neumorphic_container.dart';
+import 'press_scale.dart';
 
 /// Circular raised neumorphic icon button (header buttons, quick actions).
 ///
 /// Provides the standard `active:scale-95` press feedback.
-class NeumorphicIconButton extends StatefulWidget {
+class NeumorphicIconButton extends StatelessWidget {
   const NeumorphicIconButton({
     super.key,
     required this.icon,
@@ -29,51 +30,33 @@ class NeumorphicIconButton extends StatefulWidget {
   final NeumorphicStyle style;
 
   @override
-  State<NeumorphicIconButton> createState() => _NeumorphicIconButtonState();
-}
-
-class _NeumorphicIconButtonState extends State<NeumorphicIconButton> {
-  bool _pressed = false;
-
-  @override
   Widget build(BuildContext context) {
-    final color = widget.iconColor ?? context.colors.primary;
+    final color = iconColor ?? context.colors.primary;
 
-    Widget button = AnimatedScale(
-      scale: _pressed ? 0.92 : 1.0,
-      duration: const Duration(milliseconds: 120),
-      curve: Curves.easeOut,
+    Widget button = PressScale(
+      style: PressScaleStyle.compact,
+      onTap: onPressed,
+      semanticLabel: tooltip,
       child: NeumorphicContainer(
-        style: widget.style,
+        style: style,
         color: context.palette.controlSurface,
-        width: widget.size,
-        height: widget.size,
+        width: size,
+        height: size,
         borderRadius: AppRadius.full,
         alignment: Alignment.center,
         child: Icon(
-          widget.icon,
+          icon,
           color: color,
-          size: widget.iconSize,
-          fill: widget.filled ? 1 : 0,
+          size: iconSize,
+          fill: filled ? 1 : 0,
         ),
       ),
     );
 
-    if (widget.tooltip != null) {
-      button = Tooltip(message: widget.tooltip!, child: button);
+    if (tooltip != null) {
+      button = Tooltip(message: tooltip!, child: button);
     }
 
-    return Semantics(
-      button: true,
-      label: widget.tooltip,
-      child: GestureDetector(
-        onTap: widget.onPressed,
-        onTapDown: (_) => setState(() => _pressed = true),
-        onTapUp: (_) => setState(() => _pressed = false),
-        onTapCancel: () => setState(() => _pressed = false),
-        behavior: HitTestBehavior.opaque,
-        child: button,
-      ),
-    );
+    return button;
   }
 }

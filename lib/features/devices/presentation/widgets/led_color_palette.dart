@@ -115,14 +115,11 @@ class _CustomSwatch extends StatelessWidget {
             ),
           ];
 
-    return Semantics(
-      button: true,
-      selected: selected,
-      label: 'Eigene Farbe',
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
+    return PressScale(
+      enabled: onTap != null,
+      onTap: onTap,
+      semanticLabel: 'Eigene Farbe',
+      child: Container(
           width: size,
           height: size,
           decoration: BoxDecoration(
@@ -154,7 +151,6 @@ class _CustomSwatch extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-      ),
     );
   }
 }
@@ -180,13 +176,10 @@ class _Swatch extends StatelessWidget {
     final isLight = color.computeLuminance() > 0.7;
     final checkColor = isLight ? context.colors.onSurface : Colors.white;
 
-    return Semantics(
-      button: true,
-      selected: selected,
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
+    return PressScale(
+      enabled: onTap != null,
+      onTap: onTap,
+      child: Container(
           width: size,
           height: size,
           decoration: BoxDecoration(
@@ -215,7 +208,6 @@ class _Swatch extends StatelessWidget {
               ? Icon(Symbols.check, size: flat ? 18 : 22, color: checkColor, fill: 1)
               : null,
         ),
-      ),
     );
   }
 }

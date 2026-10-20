@@ -24,18 +24,18 @@ class DeviceSetupRepository {
       houseName: deviceLocation.houseName.trim().isNotEmpty
           ? deviceLocation.houseName.trim()
           : (selectedDevice.home.isNotEmpty
-              ? selectedDevice.home
-              : 'Unbekannt'),
+                ? selectedDevice.home
+                : 'Unbekannt'),
       floorName: deviceLocation.floorName.trim().isNotEmpty
           ? deviceLocation.floorName.trim()
           : (selectedDevice.floor.isNotEmpty
-              ? selectedDevice.floor
-              : 'Unbekannt'),
+                ? selectedDevice.floor
+                : 'Unbekannt'),
       roomName: deviceLocation.roomName.trim().isNotEmpty
           ? deviceLocation.roomName.trim()
           : (selectedDevice.room.isNotEmpty
-              ? selectedDevice.room
-              : 'Unbekannt'),
+                ? selectedDevice.room
+                : 'Unbekannt'),
     );
 
     final hostTrim = selectedDevice.hostname.trim();
@@ -43,8 +43,11 @@ class DeviceSetupRepository {
     final dnTrim = selectedDevice.devicename.trim();
 
     final descriptionParts = connectionMode == 'direct'
-        ? [dnTrim, typeTrim, selectedDevice.ipAddress]
-            .where((e) => e.isNotEmpty)
+        ? [
+            dnTrim,
+            typeTrim,
+            selectedDevice.ipAddress,
+          ].where((e) => e.isNotEmpty)
         : [
             dnTrim,
             typeTrim,
@@ -58,13 +61,16 @@ class DeviceSetupRepository {
           'name': loc.deviceName,
           'devicename': loc.deviceName,
           'hostname': hostTrim.isNotEmpty ? hostTrim : null,
-          'ip_address':
-              selectedDevice.ipAddress.isNotEmpty ? selectedDevice.ipAddress : null,
+          'ip_address': selectedDevice.ipAddress.isNotEmpty
+              ? selectedDevice.ipAddress
+              : null,
           'port': selectedDevice.port,
           'mac_address': selectedDevice.macAddress.isNotEmpty
               ? selectedDevice.macAddress
               : null,
           'device_code': deviceCode,
+          'current_version': _nullIfEmpty(selectedDevice.currentVersion),
+          'serial_number': _nullIfEmpty(selectedDevice.serialNumber),
           'device_type_id': null,
           'description': descriptionParts.isEmpty
               ? 'UDP-Gerät'
@@ -82,8 +88,7 @@ class DeviceSetupRepository {
       final floorId = await _findOrCreateFloor(homeId, loc.floorName, dnTrim);
       final roomId = await _findOrCreateRoom(floorId, loc.roomName, dnTrim);
 
-      final deviceTypeName =
-          typeTrim.isNotEmpty ? typeTrim : 'Control Panel';
+      final deviceTypeName = typeTrim.isNotEmpty ? typeTrim : 'Control Panel';
 
       final deviceType = await _client
           .from('device_types')
@@ -100,9 +105,10 @@ class DeviceSetupRepository {
           .select('id')
           .single();
 
-      await _client.from('devices').update({
-        'device_type_id': deviceType['id'],
-      }).eq('id', deviceId);
+      await _client
+          .from('devices')
+          .update({'device_type_id': deviceType['id']})
+          .eq('id', deviceId);
 
       final dlsPayload = {
         'device_id': deviceId,
@@ -129,11 +135,14 @@ class DeviceSetupRepository {
         await _client.from('device_location_settings').insert(dlsPayload);
       }
 
-      await _client.from('devices').update({
-        'name': loc.deviceName,
-        'devicename': loc.deviceName,
-        'updated_at': DateTime.now().toUtc().toIso8601String(),
-      }).eq('id', deviceId);
+      await _client
+          .from('devices')
+          .update({
+            'name': loc.deviceName,
+            'devicename': loc.deviceName,
+            'updated_at': DateTime.now().toUtc().toIso8601String(),
+          })
+          .eq('id', deviceId);
     } catch (e) {
       // Device row exists even if hierarchy fails — log but don't block.
     }
@@ -224,4 +233,9 @@ class DeviceSetupRepository {
 
     return inserted['id'] as String;
   }
+}
+
+String? _nullIfEmpty(String value) {
+  final trimmed = value.trim();
+  return trimmed.isEmpty ? null : trimmed;
 }

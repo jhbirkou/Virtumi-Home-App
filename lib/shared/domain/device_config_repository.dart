@@ -7,7 +7,11 @@ abstract interface class DeviceConfigRepository {
   Future<void> saveNetworkConfig(String deviceId, NetworkConfig config);
 
   Future<CloudConfig> getCloudConfig(String deviceId);
-  Future<void> saveCloudConfig(String deviceId, CloudConfig config);
+  Future<void> saveMqttCloud(String deviceId, MqttCloudConfig config);
+  Future<void> saveVirtumiCloud(String deviceId, VirtumiCloudConfig config);
+
+  /// Sends the stored Virtumi Cloud credentials again, without MQTT settings.
+  Future<void> resendVirtumiCloud(String deviceId, VirtumiCloudConfig config);
 
   Future<DateTimeConfig> getDateTimeConfig(String deviceId);
   Future<void> saveDateTimeConfig(String deviceId, DateTimeConfig config);

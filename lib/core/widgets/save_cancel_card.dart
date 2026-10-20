@@ -4,6 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import '../theme/theme.dart';
 import 'app_card.dart';
 import 'neumorphic_container.dart';
+import 'press_scale.dart';
 
 /// Edit-mode action card with "Abbrechen" and "Speichern" buttons.
 ///
@@ -102,33 +103,29 @@ class _ActionButton extends StatelessWidget {
       ),
     );
 
-    return Semantics(
-      button: true,
-      label: label,
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: filled
-            ? Container(
-                decoration: BoxDecoration(
-                  color: primary,
-                  borderRadius: AppRadius.mdAll,
-                  boxShadow: [
-                    BoxShadow(
-                      color: primary.withValues(alpha: 0.35),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: content,
-              )
-            : NeumorphicContainer(
-                style: NeumorphicStyle.raisedSmall,
+    return PressScale(
+      onTap: onTap,
+      semanticLabel: label,
+      child: filled
+          ? Container(
+              decoration: BoxDecoration(
+                color: primary,
                 borderRadius: AppRadius.mdAll,
-                child: content,
+                boxShadow: [
+                  BoxShadow(
+                    color: primary.withValues(alpha: 0.35),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-      ),
+              child: content,
+            )
+          : NeumorphicContainer(
+              style: NeumorphicStyle.raisedSmall,
+              borderRadius: AppRadius.mdAll,
+              child: content,
+            ),
     );
   }
 }

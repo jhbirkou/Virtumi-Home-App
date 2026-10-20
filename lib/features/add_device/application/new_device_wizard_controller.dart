@@ -36,8 +36,8 @@ final deviceSetupRepositoryProvider = Provider<DeviceSetupRepository>((ref) {
 
 final newDeviceWizardControllerProvider =
     NotifierProvider<NewDeviceWizardController, NewDeviceWizardState>(
-  NewDeviceWizardController.new,
-);
+      NewDeviceWizardController.new,
+    );
 
 class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
   @override
@@ -107,10 +107,7 @@ class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
     );
   }
 
-  Future<void> scanLan({
-    required String broadcastIp,
-    required int port,
-  }) async {
+  Future<void> scanLan({required String broadcastIp, required int port}) async {
     state = state.copyWith(isBusy: true, clearError: true);
     try {
       final devices = await _udp.discoverDevices(
@@ -167,8 +164,11 @@ class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
     }
   }
 
-  Future<void> _stopFlashingDevices([Iterable<WizardFoundDevice>? devices]) async {
-    final targets = devices?.toList() ??
+  Future<void> _stopFlashingDevices([
+    Iterable<WizardFoundDevice>? devices,
+  ]) async {
+    final targets =
+        devices?.toList() ??
         state.discoveredDevices
             .where((d) => state.flashingDeviceKeys.contains(d.flashKey))
             .toList();
@@ -275,13 +275,24 @@ class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
       );
 
       if (status.isConnected) {
+        var device = status.toFoundDevice(port: state.targetPort);
+        if (device.currentVersion.isEmpty || device.serialNumber.isEmpty) {
+          try {
+            final info = WizardFoundDevice.fromJson(
+              await _ble.getDeviceInfo(
+                connection.characteristic,
+                state.devicePassword.trim(),
+              ),
+            );
+            device = device.withIdentityFrom(info);
+          } catch (_) {}
+        }
+
         await _ble.stopBluetooth(
           connection.characteristic,
           state.devicePassword.trim(),
         );
         await connection.disconnect();
-
-        final device = status.toFoundDevice(port: state.targetPort);
         state = state.copyWith(
           selectedDevice: device,
           deviceLocation: _defaultLocation(device),
@@ -385,7 +396,7 @@ class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
         selected = WizardFoundDevice.fromJson({
           ...info,
           'ip_address': selected.ipAddress,
-        });
+        }).withIdentityFrom(selected);
       }
 
       final json = await _udp.readLocation(
@@ -471,10 +482,7 @@ class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
       await _udp.writeDateTime(
         targetIp: device.ipAddress,
         port: state.targetPort,
-        payload: dateTimeUdpWritePayload(
-          state.devicePassword.trim(),
-          config,
-        ),
+        payload: dateTimeUdpWritePayload(state.devicePassword.trim(), config),
       );
       state = state.copyWith(step: WizardStep.general, isBusy: false);
       await loadGeneralStep();
@@ -518,10 +526,7 @@ class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
       await _udp.writeGeneral(
         targetIp: device.ipAddress,
         port: state.targetPort,
-        payload: generalUdpWritePayload(
-          state.devicePassword.trim(),
-          config,
-        ),
+        payload: generalUdpWritePayload(state.devicePassword.trim(), config),
       );
       state = state.copyWith(step: WizardStep.update, isBusy: false);
       await loadUpdateStep();
@@ -545,10 +550,7 @@ class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
         isBusy: false,
       );
     } catch (_) {
-      state = state.copyWith(
-        updateConfig: const UpdateConfig(),
-        isBusy: false,
-      );
+      state = state.copyWith(updateConfig: const UpdateConfig(), isBusy: false);
     }
   }
 
@@ -565,10 +567,7 @@ class NewDeviceWizardController extends Notifier<NewDeviceWizardState> {
       await _udp.writeUpdate(
         targetIp: device.ipAddress,
         port: state.targetPort,
-        payload: updateUdpWritePayload(
-          state.devicePassword.trim(),
-          config,
-        ),
+        payload: updateUdpWritePayload(state.devicePassword.trim(), config),
       );
       state = state.copyWith(step: WizardStep.passwordOpt, isBusy: false);
     } catch (e) {

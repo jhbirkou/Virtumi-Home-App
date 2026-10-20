@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../theme/theme.dart';
+import 'press_scale.dart';
 
 /// A bottom navigation destination definition.
 class AppNavDestination {
@@ -94,70 +95,65 @@ class _NavItem extends StatelessWidget {
     final inactive = context.colors.onSurfaceVariant.withValues(alpha: 0.6);
     final palette = context.palette;
 
-    return Semantics(
-      button: true,
-      selected: active,
-      label: destination.label,
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: 48,
-                height: 44,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    if (active)
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: palette.flatElevation
-                              ? primary.withValues(alpha: 0.15)
-                              : context.colors.surfaceContainerHighest
-                                  .withValues(alpha: 0.6),
-                          shape: BoxShape.circle,
-                          border: palette.flatElevation
-                              ? Border.all(
-                                  color: primary.withValues(alpha: 0.35),
-                                )
-                              : null,
-                          boxShadow: palette.flatElevation
-                              ? null
-                              : [
-                                  BoxShadow(
-                                    color: primary.withValues(alpha: 0.25),
-                                    blurRadius: 12,
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                        ),
+    return PressScale(
+      onTap: onTap,
+      semanticLabel: destination.label,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: 48,
+              height: 44,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (active)
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: palette.flatElevation
+                            ? primary.withValues(alpha: 0.15)
+                            : context.colors.surfaceContainerHighest
+                                .withValues(alpha: 0.6),
+                        shape: BoxShape.circle,
+                        border: palette.flatElevation
+                            ? Border.all(
+                                color: primary.withValues(alpha: 0.35),
+                              )
+                            : null,
+                        boxShadow: palette.flatElevation
+                            ? null
+                            : [
+                                BoxShadow(
+                                  color: primary.withValues(alpha: 0.25),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                ),
+                              ],
                       ),
-                    Icon(
-                      destination.icon,
-                      size: 24,
-                      fill: active ? 1 : 0,
-                      color: active ? primary : inactive,
                     ),
-                  ],
-                ),
+                  Icon(
+                    destination.icon,
+                    size: 24,
+                    fill: active ? 1 : 0,
+                    color: active ? primary : inactive,
+                  ),
+                ],
               ),
-              const SizedBox(height: 2),
-              Text(
-                destination.label,
-                style: context.text.labelSmall?.copyWith(
-                  color: active ? primary : inactive,
-                  fontWeight: active ? FontWeight.w700 : FontWeight.w600,
-                  letterSpacing: 0.2,
-                ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              destination.label,
+              style: context.text.labelSmall?.copyWith(
+                color: active ? primary : inactive,
+                fontWeight: active ? FontWeight.w700 : FontWeight.w600,
+                letterSpacing: 0.2,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/navigation/app_routes.dart';
 
-/// Per-user app preferences from [app_settings] (Einstellungen screen).
+/// Per-user app preferences stored on the device (Einstellungen screen).
 @immutable
 class AppSettings {
   const AppSettings({

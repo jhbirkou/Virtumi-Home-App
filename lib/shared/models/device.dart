@@ -54,6 +54,7 @@ class Device {
     this.firmwareVersion = '1.0.0',
     this.model = 'Virtumi Device',
     this.serialNumber = '',
+    this.hardwareSerial = '',
     this.ipAddress = '',
     this.macAddress = '',
     this.hostname = '',
@@ -69,7 +70,12 @@ class Device {
   final double? temperature;
   final String firmwareVersion;
   final String model;
+
+  /// Device password stored in `devices.device_code`.
   final String serialNumber;
+
+  /// Hardware serial stored in `devices.serial_number`.
+  final String hardwareSerial;
   final String ipAddress;
   final String macAddress;
   final String hostname;
@@ -95,6 +101,7 @@ class Device {
       firmwareVersion: firmwareVersion,
       model: model,
       serialNumber: serialNumber,
+      hardwareSerial: hardwareSerial,
       ipAddress: ipAddress,
       macAddress: macAddress,
       hostname: hostname,

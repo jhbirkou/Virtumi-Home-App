@@ -13,6 +13,8 @@ class WizardFoundDevice {
     this.floor = '',
     this.room = '',
     this.userMail = '',
+    this.currentVersion = '',
+    this.serialNumber = '',
   });
 
   final String devicename;
@@ -25,6 +27,8 @@ class WizardFoundDevice {
   final String floor;
   final String room;
   final String userMail;
+  final String currentVersion;
+  final String serialNumber;
 
   factory WizardFoundDevice.fromJson(
     Map<String, dynamic> json, {
@@ -32,10 +36,12 @@ class WizardFoundDevice {
   }) {
     final ip = _nonEmpty(json['ip_address']) ?? fallbackIp ?? '';
     return WizardFoundDevice(
-      devicename: _nonEmpty(json['devicename']) ??
+      devicename:
+          _nonEmpty(json['devicename']) ??
           _nonEmpty(json['name']) ??
           'Virtumi Device',
-      devicetype: _nonEmpty(json['devicetype']) ??
+      devicetype:
+          _nonEmpty(json['devicetype']) ??
           _nonEmpty(json['device_type']) ??
           'Control Panel',
       macAddress:
@@ -46,9 +52,10 @@ class WizardFoundDevice {
       home: _nonEmpty(json['home']) ?? '',
       floor: _nonEmpty(json['floor']) ?? '',
       room: _nonEmpty(json['room']) ?? '',
-      userMail: _nonEmpty(json['user_mail']) ??
-          _nonEmpty(json['user_email']) ??
-          '',
+      userMail:
+          _nonEmpty(json['user_mail']) ?? _nonEmpty(json['user_email']) ?? '',
+      currentVersion: _nonEmpty(json['current_version']) ?? '',
+      serialNumber: _nonEmpty(json['serial_number']) ?? '',
     );
   }
 
@@ -78,6 +85,8 @@ class WizardFoundDevice {
     String? floor,
     String? room,
     String? userMail,
+    String? currentVersion,
+    String? serialNumber,
   }) {
     return WizardFoundDevice(
       devicename: devicename ?? this.devicename,
@@ -90,6 +99,18 @@ class WizardFoundDevice {
       floor: floor ?? this.floor,
       room: room ?? this.room,
       userMail: userMail ?? this.userMail,
+      currentVersion: currentVersion ?? this.currentVersion,
+      serialNumber: serialNumber ?? this.serialNumber,
+    );
+  }
+
+  /// Fills an empty version or serial from [other] when this device has none.
+  WizardFoundDevice withIdentityFrom(WizardFoundDevice other) {
+    return copyWith(
+      currentVersion: currentVersion.isNotEmpty
+          ? currentVersion
+          : other.currentVersion,
+      serialNumber: serialNumber.isNotEmpty ? serialNumber : other.serialNumber,
     );
   }
 }

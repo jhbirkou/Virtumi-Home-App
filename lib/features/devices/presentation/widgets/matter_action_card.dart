@@ -39,7 +39,7 @@ class MatterActionCard extends StatelessWidget {
   }
 }
 
-class _MatterActionButton extends StatefulWidget {
+class _MatterActionButton extends StatelessWidget {
   const _MatterActionButton({
     required this.label,
     required this.icon,
@@ -53,57 +53,40 @@ class _MatterActionButton extends StatefulWidget {
   final VoidCallback onTap;
 
   @override
-  State<_MatterActionButton> createState() => _MatterActionButtonState();
-}
-
-class _MatterActionButtonState extends State<_MatterActionButton> {
-  bool _pressed = false;
-
-  @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: widget.label,
-      child: GestureDetector(
-        onTap: widget.onTap,
-        onTapDown: (_) => setState(() => _pressed = true),
-        onTapUp: (_) => setState(() => _pressed = false),
-        onTapCancel: () => setState(() => _pressed = false),
-        child: AnimatedScale(
-          scale: _pressed ? 0.97 : 1,
-          duration: const Duration(milliseconds: 120),
-          child: NeumorphicContainer(
-            style: NeumorphicStyle.raised,
-            borderRadius: AppRadius.mdAll,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.gutter,
-              vertical: AppSpacing.md,
+    return PressScale(
+      onTap: onTap,
+      semanticLabel: label,
+      child: NeumorphicContainer(
+        style: NeumorphicStyle.raised,
+        borderRadius: AppRadius.mdAll,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.gutter,
+          vertical: AppSpacing.md,
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: accent.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: Icon(icon, color: accent, size: 20),
             ),
-            child: Row(
-              children: [
-                Container(
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
-                    color: widget.accent.withValues(alpha: 0.12),
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(widget.icon, color: widget.accent, size: 20),
+            const SizedBox(width: AppSpacing.gutter),
+            Expanded(
+              child: Text(
+                label,
+                style: context.text.bodyLarge?.copyWith(
+                  color: accent,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(width: AppSpacing.gutter),
-                Expanded(
-                  child: Text(
-                    widget.label,
-                    style: context.text.bodyLarge?.copyWith(
-                      color: widget.accent,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

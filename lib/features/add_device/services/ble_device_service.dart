@@ -25,6 +25,8 @@ class BleWifiStatus {
     this.devicename,
     this.devicetype,
     this.hostname,
+    this.currentVersion,
+    this.serialNumber,
   });
 
   final int wifistate;
@@ -34,11 +36,11 @@ class BleWifiStatus {
   final String? devicename;
   final String? devicetype;
   final String? hostname;
+  final String? currentVersion;
+  final String? serialNumber;
 
   bool get isConnected =>
-      wifistate == 1 &&
-      ipAddress != null &&
-      _isValidIpv4(ipAddress!);
+      wifistate == 1 && ipAddress != null && _isValidIpv4(ipAddress!);
 
   WizardFoundDevice toFoundDevice({int port = 6000}) {
     return WizardFoundDevice(
@@ -48,7 +50,15 @@ class BleWifiStatus {
       ipAddress: ipAddress ?? '',
       hostname: hostname ?? '',
       port: port,
+      currentVersion: currentVersion ?? '',
+      serialNumber: serialNumber ?? '',
     );
+  }
+
+  static String? _nonEmpty(dynamic value) {
+    if (value == null) return null;
+    final s = value.toString().trim();
+    return s.isEmpty ? null : s;
   }
 
   static bool _isValidIpv4(String ip) {
@@ -73,6 +83,8 @@ class BleWifiStatus {
       devicename: json['devicename']?.toString().trim(),
       devicetype: json['devicetype']?.toString().trim(),
       hostname: json['hostname']?.toString().trim(),
+      currentVersion: _nonEmpty(json['current_version']),
+      serialNumber: _nonEmpty(json['serial_number']),
     );
   }
 }
@@ -91,7 +103,9 @@ class BleConnection {
 }
 
 class BleDeviceService {
-  Stream<List<ScanResult>> scan({Duration timeout = const Duration(seconds: 15)}) {
+  Stream<List<ScanResult>> scan({
+    Duration timeout = const Duration(seconds: 15),
+  }) {
     FlutterBluePlus.startScan(timeout: timeout);
     return FlutterBluePlus.scanResults;
   }
@@ -114,7 +128,9 @@ class BleDeviceService {
         }
 
         await device.connect(timeout: connectTimeout, autoConnect: false);
-        await Future<void>.delayed(Duration(milliseconds: attempt == 1 ? 220 : 380));
+        await Future<void>.delayed(
+          Duration(milliseconds: attempt == 1 ? 220 : 380),
+        );
 
         if (!device.isConnected) {
           lastErr = StateError('GATT sofort getrennt');
@@ -131,7 +147,9 @@ class BleDeviceService {
           try {
             if (device.isConnected) await device.disconnect();
           } catch (_) {}
-          await Future<void>.delayed(Duration(milliseconds: 450 + attempt * 120));
+          await Future<void>.delayed(
+            Duration(milliseconds: 450 + attempt * 120),
+          );
           continue;
         }
         rethrow;
@@ -141,7 +159,9 @@ class BleDeviceService {
     throw lastErr ?? StateError('BLE-Verbindung fehlgeschlagen');
   }
 
-  Future<List<BluetoothService>> _discoverServices(BluetoothDevice device) async {
+  Future<List<BluetoothService>> _discoverServices(
+    BluetoothDevice device,
+  ) async {
     final allServices = await device.discoverServices();
     final found = <BluetoothService>[];
     for (final uuid in _targetServiceUuids) {

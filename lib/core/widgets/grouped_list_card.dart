@@ -5,6 +5,7 @@ import '../theme/theme.dart';
 import 'app_card.dart';
 import 'app_toggle.dart';
 import 'icon_box.dart';
+import 'press_scale.dart';
 
 /// A single raised card that groups related [SettingsRow]s, separated by subtle
 /// dividers, matching the "Grouped List" component from the design system.
@@ -138,18 +139,10 @@ class SettingsRow extends StatelessWidget {
 
     if (onTap == null) return content;
 
-    final palette = context.palette;
-    return Semantics(
-      button: true,
-      label: title,
-      child: InkWell(
-        onTap: onTap,
-        splashColor: Colors.transparent,
-        highlightColor: palette.flatElevation
-            ? Colors.white.withValues(alpha: 0.05)
-            : palette.shadowLight.withValues(alpha: 0.4),
-        child: content,
-      ),
+    return PressScale(
+      onTap: onTap,
+      semanticLabel: title,
+      child: content,
     );
   }
 }

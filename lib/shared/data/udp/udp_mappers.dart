@@ -69,6 +69,7 @@ GeneralConfig mapGeneralConfigFromUdp(
     ledColorValue: color,
     brightness: json['brightness'] as int? ?? 80,
     ledStatus: ledStateFromInt(json['led_state'] as int?),
+    commandType: commandTypeFromMode(json['mode'] as int?),
     startTime: start != null && start.length >= 5 ? start.substring(0, 5) : '18:00',
     endTime: end != null && end.length >= 5 ? end.substring(0, 5) : '23:00',
     specificDate: json['cmd_date'] as String?,

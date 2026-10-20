@@ -7,6 +7,7 @@ import '../data/activity_tracking/activity_tracking_device_request_repository.da
 import '../data/activity_tracking/activity_tracking_smart_home_repository.dart';
 import '../data/activity_tracking/activity_tracking_smart_led_repository.dart';
 import '../data/csv_location_repository.dart';
+import '../data/local_app_settings_repository.dart';
 import '../data/mock_app_settings_repository.dart';
 import '../data/mock_cp_settings_repository.dart';
 import '../data/mock_device_config_repository.dart';
@@ -16,7 +17,6 @@ import '../data/mock_seed.dart';
 import '../data/mock_smart_home_repository.dart';
 import '../data/mock_smart_led_repository.dart';
 import '../data/mock_user_repository.dart';
-import '../data/supabase/supabase_app_settings_repository.dart';
 import '../data/supabase/supabase_cp_settings_repository.dart';
 import '../data/supabase/supabase_device_config_repository.dart';
 import '../data/supabase/supabase_device_data_repository.dart';
@@ -65,10 +65,7 @@ final userRepositoryProvider = Provider<UserRepository>((ref) {
 
 /// App settings repository (Einstellungen).
 final appSettingsRepositoryProvider = Provider<AppSettingsRepository>((ref) {
-  return SupabaseAppSettingsRepository(
-    ref.watch(supabaseClientProvider),
-    ref.watch(preferencesServiceProvider),
-  );
+  return LocalAppSettingsRepository(ref.watch(preferencesServiceProvider));
 });
 
 /// Native UDP device communication service.

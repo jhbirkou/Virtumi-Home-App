@@ -135,42 +135,39 @@ class _SystemTimeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = context.colors.primary;
-    return Semantics(
-      button: true,
-      label: 'Systemzeit übernehmen',
-      child: GestureDetector(
-        onTap: enabled ? onTap : null,
-        behavior: HitTestBehavior.opaque,
-        child: Opacity(
-          opacity: enabled ? 1 : 0.5,
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.gutter),
-            decoration: BoxDecoration(
-              color: primary,
-              borderRadius: AppRadius.mdAll,
-              boxShadow: [
-                BoxShadow(
-                  color: primary.withValues(alpha: 0.35),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+    return PressScale(
+      enabled: enabled,
+      onTap: enabled ? onTap : null,
+      semanticLabel: 'Systemzeit übernehmen',
+      child: Opacity(
+        opacity: enabled ? 1 : 0.5,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.gutter),
+          decoration: BoxDecoration(
+            color: primary,
+            borderRadius: AppRadius.mdAll,
+            boxShadow: [
+              BoxShadow(
+                color: primary.withValues(alpha: 0.35),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Symbols.history, size: 22, color: context.colors.onPrimary),
+              const SizedBox(width: AppSpacing.sm),
+              Text(
+                'Systemzeit übernehmen',
+                style: context.text.bodyLarge?.copyWith(
+                  color: context.colors.onPrimary,
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Symbols.history, size: 22, color: context.colors.onPrimary),
-                const SizedBox(width: AppSpacing.sm),
-                Text(
-                  'Systemzeit übernehmen',
-                  style: context.text.bodyLarge?.copyWith(
-                    color: context.colors.onPrimary,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -200,9 +197,9 @@ class _Field extends StatelessWidget {
       children: [
         Text(label.toUpperCase(), style: context.text.labelSmall),
         const SizedBox(height: AppSpacing.sm),
-        GestureDetector(
+        PressScale(
+          enabled: enabled,
           onTap: enabled ? onTap : null,
-          behavior: HitTestBehavior.opaque,
           child: NeumorphicContainer(
             style: NeumorphicStyle.sunken,
             borderRadius: AppRadius.mdAll,

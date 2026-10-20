@@ -201,9 +201,10 @@ class _SeeAllButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return PressScale(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      semanticLabel: 'Alle anzeigen',
+      scalePressed: 0.95,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

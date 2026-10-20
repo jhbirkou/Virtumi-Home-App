@@ -12,6 +12,7 @@ export 'nav_tile_card.dart';
 export 'neumorphic_container.dart';
 export 'neumorphic_icon_button.dart';
 export 'option_picker.dart';
+export 'press_scale.dart';
 export 'save_cancel_card.dart';
 export 'section_header_card.dart';
 export 'settings_input_row.dart';

@@ -81,8 +81,19 @@ class _ConnectionAwareDeviceConfigRepository implements DeviceConfigRepository {
       _repo.getCloudConfig(deviceId);
 
   @override
-  Future<void> saveCloudConfig(String deviceId, CloudConfig config) =>
-      _repo.saveCloudConfig(deviceId, config);
+  Future<void> saveMqttCloud(String deviceId, MqttCloudConfig config) =>
+      _repo.saveMqttCloud(deviceId, config);
+
+  @override
+  Future<void> saveVirtumiCloud(String deviceId, VirtumiCloudConfig config) =>
+      _repo.saveVirtumiCloud(deviceId, config);
+
+  @override
+  Future<void> resendVirtumiCloud(
+    String deviceId,
+    VirtumiCloudConfig config,
+  ) =>
+      _repo.resendVirtumiCloud(deviceId, config);
 
   @override
   Future<DateTimeConfig> getDateTimeConfig(String deviceId) =>

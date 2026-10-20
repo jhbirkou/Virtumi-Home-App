@@ -28,9 +28,26 @@ class MockDeviceConfigRepository implements DeviceConfigRepository {
   }
 
   @override
-  Future<void> saveCloudConfig(String deviceId, CloudConfig config) async {
-    _store.cloudByDevice[deviceId] = config;
+  Future<void> saveMqttCloud(String deviceId, MqttCloudConfig config) async {
+    final current = _store.cloudByDevice[deviceId] ?? const CloudConfig();
+    _store.cloudByDevice[deviceId] = current.copyWith(mqtt: config);
   }
+
+  @override
+  Future<void> saveVirtumiCloud(
+    String deviceId,
+    VirtumiCloudConfig config,
+  ) async {
+    final current = _store.cloudByDevice[deviceId] ?? const CloudConfig();
+    _store.cloudByDevice[deviceId] = current.copyWith(virtumi: config);
+  }
+
+  @override
+  Future<void> resendVirtumiCloud(
+    String deviceId,
+    VirtumiCloudConfig config,
+  ) =>
+      saveVirtumiCloud(deviceId, config);
 
   @override
   Future<DateTimeConfig> getDateTimeConfig(String deviceId) async {

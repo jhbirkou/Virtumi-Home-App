@@ -127,40 +127,36 @@ class _PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = context.colors.primary;
-    return Semantics(
-      button: true,
-      label: label,
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.gutter),
-          decoration: BoxDecoration(
-            color: primary,
-            borderRadius: AppRadius.mdAll,
-            boxShadow: [
-              BoxShadow(
-                color: primary.withValues(alpha: 0.35),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
+    return PressScale(
+      onTap: onTap,
+      semanticLabel: label,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.gutter),
+        decoration: BoxDecoration(
+          color: primary,
+          borderRadius: AppRadius.mdAll,
+          boxShadow: [
+            BoxShadow(
+              color: primary.withValues(alpha: 0.35),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 22, color: context.colors.onPrimary),
+            const SizedBox(width: AppSpacing.sm),
+            Text(
+              label,
+              style: context.text.bodyLarge?.copyWith(
+                color: context.colors.onPrimary,
+                fontWeight: FontWeight.w700,
               ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 22, color: context.colors.onPrimary),
-              const SizedBox(width: AppSpacing.sm),
-              Text(
-                label,
-                style: context.text.bodyLarge?.copyWith(
-                  color: context.colors.onPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

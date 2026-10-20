@@ -156,62 +156,45 @@ class _ControlPanelDeviceCardState extends ConsumerState<ControlPanelDeviceCard>
   }
 }
 
-class _PrimaryNavButton extends StatefulWidget {
+class _PrimaryNavButton extends StatelessWidget {
   const _PrimaryNavButton({required this.onPressed});
 
   final VoidCallback onPressed;
 
   @override
-  State<_PrimaryNavButton> createState() => _PrimaryNavButtonState();
-}
-
-class _PrimaryNavButtonState extends State<_PrimaryNavButton> {
-  bool _pressed = false;
-
-  @override
   Widget build(BuildContext context) {
     final primary = context.colors.primary;
 
-    return Semantics(
-      button: true,
-      label: 'Gerätedetails',
-      child: GestureDetector(
-        onTap: widget.onPressed,
-        onTapDown: (_) => setState(() => _pressed = true),
-        onTapUp: (_) => setState(() => _pressed = false),
-        onTapCancel: () => setState(() => _pressed = false),
-        child: AnimatedScale(
-          scale: _pressed ? 0.92 : 1.0,
-          duration: const Duration(milliseconds: 120),
-          curve: Curves.easeOut,
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: primary,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: primary.withValues(alpha: 0.35),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+    return PressScale(
+      style: PressScaleStyle.compact,
+      onTap: onPressed,
+      semanticLabel: 'Gerätedetails',
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: primary,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: primary.withValues(alpha: 0.35),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
             ),
-            alignment: Alignment.center,
-            child: Icon(
-              Symbols.arrow_forward,
-              color: context.colors.onPrimary,
-              size: 20,
-            ),
-          ),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Icon(
+          Symbols.arrow_forward,
+          color: context.colors.onPrimary,
+          size: 20,
         ),
       ),
     );
   }
 }
 
-class _PanelZoneButton extends StatefulWidget {
+class _PanelZoneButton extends StatelessWidget {
   const _PanelZoneButton({
     required this.label,
     required this.icon,
@@ -227,19 +210,11 @@ class _PanelZoneButton extends StatefulWidget {
   final bool prominent;
 
   @override
-  State<_PanelZoneButton> createState() => _PanelZoneButtonState();
-}
-
-class _PanelZoneButtonState extends State<_PanelZoneButton> {
-  bool _pressed = false;
-
-  @override
   Widget build(BuildContext context) {
     final primary = context.colors.primary;
     final inactive = context.colors.onSurface;
-    final selected = widget.selected;
-    final size = widget.prominent && selected ? 56.0 : 48.0;
-    final iconSize = widget.prominent && selected ? 28.0 : 24.0;
+    final size = prominent && selected ? 56.0 : 48.0;
+    final iconSize = prominent && selected ? 28.0 : 24.0;
 
     Widget circle;
     if (selected) {
@@ -259,7 +234,7 @@ class _PanelZoneButtonState extends State<_PanelZoneButton> {
         ),
         alignment: Alignment.center,
         child: Icon(
-          widget.icon,
+          icon,
           color: context.colors.onPrimary,
           size: iconSize,
         ),
@@ -272,38 +247,27 @@ class _PanelZoneButtonState extends State<_PanelZoneButton> {
         height: size,
         borderRadius: AppRadius.full,
         alignment: Alignment.center,
-        child: Icon(widget.icon, color: inactive, size: iconSize),
+        child: Icon(icon, color: inactive, size: iconSize),
       );
     }
 
-    return Semantics(
-      button: true,
-      selected: selected,
-      label: widget.label,
-      child: GestureDetector(
-        onTap: widget.onTap,
-        onTapDown: (_) => setState(() => _pressed = true),
-        onTapUp: (_) => setState(() => _pressed = false),
-        onTapCancel: () => setState(() => _pressed = false),
-        child: AnimatedScale(
-          scale: _pressed ? 0.92 : 1.0,
-          duration: const Duration(milliseconds: 120),
-          curve: Curves.easeOut,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              circle,
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                widget.label,
-                style: DeviceCardTextStyles.caption(
-                  context,
-                  emphasis: selected,
-                ),
-              ),
-            ],
+    return PressScale(
+      style: PressScaleStyle.compact,
+      onTap: onTap,
+      semanticLabel: label,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          circle,
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            label,
+            style: DeviceCardTextStyles.caption(
+              context,
+              emphasis: selected,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
