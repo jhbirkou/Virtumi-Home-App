@@ -3,6 +3,7 @@ export 'cloud_config.dart';
 export 'cp_command_function.dart';
 export 'cp_device_type.dart';
 export 'cp_parameter.dart';
+export 'cp_parameter_mode.dart';
 export 'cp_parameter_device_option.dart';
 export 'device.dart';
 export 'device_data_entry.dart';

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +14,7 @@ import '../../../core/theme/theme.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../shared/models/models.dart';
 import '../../../shared/providers/data_providers.dart';
+import '../../../shared/providers/repository_providers.dart';
 import '../application/room_devices_controller.dart';
 import 'widgets/control_panel_device_card.dart';
 import 'widgets/device_control_card.dart';
@@ -32,9 +35,59 @@ class RoomOverviewPage extends ConsumerStatefulWidget {
 class _RoomOverviewPageState extends ConsumerState<RoomOverviewPage> {
   RealtimeService? _realtime;
   final _livecomSubscribed = <String>{};
+  Timer? _poll;
+
+  /// Bumped on each refresh so [SmartLedDeviceCard] drops optimistic edits and
+  /// shows the values just read from the device or Supabase.
+  int _ledRefreshGeneration = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _poll = Timer.periodic(const Duration(seconds: 1), (_) => _pollTick());
+  }
+
+  /// Reloads Smart LED data while this room is the front route and the last
+  /// read has finished, so requests do not stack.
+  void _pollTick() {
+    if (!mounted) return;
+    final route = ModalRoute.of(context);
+    if (route != null && !route.isCurrent) return;
+
+    final devicesAsync = ref.read(roomDevicesControllerProvider(widget.roomId));
+    if (devicesAsync.isLoading) return;
+    final devices = devicesAsync.value;
+    if (devices == null) return;
+    final lights = [
+      for (final device in devices)
+        if (device.type == DeviceType.light) device,
+    ];
+    if (lights.isEmpty) return;
+    for (final device in lights) {
+      final strips = smartLedStripsProvider(device.id);
+      if (ref.exists(strips) && ref.read(strips).isLoading) return;
+    }
+    _refresh();
+  }
+
+  void _refresh() {
+    final id = widget.roomId;
+    final devices = ref.read(roomDevicesControllerProvider(id)).value;
+    ref.invalidate(roomDevicesControllerProvider(id));
+    if (devices != null) {
+      final resolver = ref.read(deviceEndpointResolverProvider);
+      for (final device in devices) {
+        if (device.type != DeviceType.light) continue;
+        resolver.invalidate(device.id);
+        ref.invalidate(smartLedStripsProvider(device.id));
+      }
+    }
+    setState(() => _ledRefreshGeneration++);
+  }
 
   @override
   void dispose() {
+    _poll?.cancel();
     _realtime?.unsubscribeAll();
     super.dispose();
   }
@@ -62,8 +115,7 @@ class _RoomOverviewPageState extends ConsumerState<RoomOverviewPage> {
 
     return AppScaffold(
       header: AppHeader(
-        onRefresh: () =>
-            ref.invalidate(roomDevicesControllerProvider(widget.roomId)),
+        onRefresh: _refresh,
       ),
       body: AppScrollView(
         children: [
@@ -73,10 +125,33 @@ class _RoomOverviewPageState extends ConsumerState<RoomOverviewPage> {
             accent: room == null ? null : context.accent(room.accentKey),
             filled: true,
           ),
-          AsyncValueView<List<Device>>(
-            value: devicesAsync,
-            onRetry: () =>
-                ref.invalidate(roomDevicesControllerProvider(widget.roomId)),
+          devicesAsync.when(
+            skipLoadingOnReload: true,
+            skipError: true,
+            loading: () => const Padding(
+              padding: EdgeInsets.all(AppSpacing.sectionMargin),
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            error: (error, _) => Padding(
+              padding: const EdgeInsets.all(AppSpacing.sectionMargin),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Symbols.error, color: context.colors.error, size: 40),
+                  const SizedBox(height: AppSpacing.gutter),
+                  Text(
+                    'Etwas ist schiefgelaufen',
+                    style: context.text.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: AppSpacing.gutter),
+                  TextButton(
+                    onPressed: _refresh,
+                    child: const Text('Erneut versuchen'),
+                  ),
+                ],
+              ),
+            ),
             data: (devices) {
               _ensureLivecomSubscriptions(devices);
               if (devices.isEmpty) {
@@ -101,9 +176,11 @@ class _RoomOverviewPageState extends ConsumerState<RoomOverviewPage> {
                       )
                     else if (device.type == DeviceType.light)
                       SmartLedDeviceCard(
+                        key: ValueKey(device.id),
                         device: device,
                         showEffectPicker: false,
                         showOfflineStatus: false,
+                        refreshGeneration: _ledRefreshGeneration,
                         onOpenDetails: () =>
                             context.push(Paths.deviceDetails(device.id)),
                         onOpenSettings: () =>

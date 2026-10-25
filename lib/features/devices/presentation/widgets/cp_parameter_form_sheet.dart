@@ -37,6 +37,29 @@ class _CpParameterFormSheetState extends ConsumerState<CpParameterFormSheet> {
     setState(() => _draft = transform(_draft));
   }
 
+  String get _deviceLabel {
+    final selected = _selectedDevice;
+    if (selected != null) return selected.name;
+    if (_draft.name.isNotEmpty) return _draft.name;
+    return 'Gerät auswählen';
+  }
+
+  CpParameterMode get _connectionMode =>
+      CpParameterMode.fromValue(_draft.mode) ?? CpParameterMode.defaultMode;
+
+  Future<void> _pickMode() async {
+    final result = await showOptionPicker<CpParameterMode>(
+      context: context,
+      title: 'Verbindungsart',
+      options: CpParameterMode.values,
+      labelOf: (mode) => mode.label,
+      selected: _connectionMode,
+    );
+    if (result != null) {
+      _update((draft) => draft.copyWith(mode: result.value));
+    }
+  }
+
   Future<void> _pickFunction({
     required String title,
     required int currentValue,
@@ -55,15 +78,22 @@ class _CpParameterFormSheetState extends ConsumerState<CpParameterFormSheet> {
   }
 
   CpParameter _finalizeDraft(CpParameter draft) {
-    if (!_isSmartLed) return draft;
-
     int existsFor(int active, int function) =>
         active == 1 && function > 0 ? 1 : 0;
 
     return draft.copyWith(
-      command0Exists: existsFor(draft.command0Active, draft.command0Function),
-      command1Exists: existsFor(draft.command1Active, draft.command1Function),
-      command2Exists: existsFor(draft.command2Active, draft.command2Function),
+      command0ProtokolNr: 100,
+      command1ProtokolNr: 100,
+      command2ProtokolNr: 100,
+      command0Exists: _isSmartLed
+          ? existsFor(draft.command0Active, draft.command0Function)
+          : null,
+      command1Exists: _isSmartLed
+          ? existsFor(draft.command1Active, draft.command1Function)
+          : null,
+      command2Exists: _isSmartLed
+          ? existsFor(draft.command2Active, draft.command2Function)
+          : null,
     );
   }
 
@@ -80,6 +110,8 @@ class _CpParameterFormSheetState extends ConsumerState<CpParameterFormSheet> {
         name: device.name,
         code: device.code,
         macAddress: device.espnowMac,
+        ipAddress: device.ipAddress,
+        port: device.port,
         deviceType: device.deviceType,
       );
     });
@@ -130,52 +162,77 @@ class _CpParameterFormSheetState extends ConsumerState<CpParameterFormSheet> {
                 style: context.text.titleMedium,
               ),
               const SizedBox(height: AppSpacing.md),
-              if (widget.isNew) ...[
-                AppCard(
-                  onTap: _pickDevice,
-                  child: Row(
-                    children: [
-                      IconBox(
-                        icon: Symbols.devices,
-                        color: context.colors.primary,
-                      ),
-                      const SizedBox(width: AppSpacing.gutter),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+              AppCard(
+                onTap: _pickDevice,
+                child: Row(
+                  children: [
+                    IconBox(
+                      icon: Symbols.devices,
+                      color: context.colors.primary,
+                    ),
+                    const SizedBox(width: AppSpacing.gutter),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Gerät',
+                            style: context.text.labelSmall,
+                          ),
+                          Text(
+                            _deviceLabel,
+                            style: context.text.bodyMedium,
+                          ),
+                          if (device != null) ...[
+                            const SizedBox(height: 2),
                             Text(
-                              'Gerät',
-                              style: context.text.labelSmall,
+                              device.locationPath,
+                              style: context.text.bodySmall,
                             ),
-                            Text(
-                              device?.name ?? 'Gerät auswählen',
-                              style: context.text.bodyMedium,
-                            ),
-                            if (device != null) ...[
-                              const SizedBox(height: 2),
-                              Text(
-                                device.locationPath,
-                                style: context.text.bodySmall,
-                              ),
-                            ],
                           ],
-                        ),
+                        ],
                       ),
-                      Icon(
-                        Symbols.expand_more,
-                        color: context.colors.onSurfaceVariant,
-                      ),
-                    ],
-                  ),
+                    ),
+                    Icon(
+                      Symbols.expand_more,
+                      color: context.colors.onSurfaceVariant,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: AppSpacing.sm),
-              ] else ...[
-                _InfoRow(label: 'Name', value: _draft.name),
-                _InfoRow(label: 'Code', value: _draft.code),
-                _InfoRow(label: 'ESP-NOW MAC', value: _draft.macAddress),
-                const SizedBox(height: AppSpacing.sm),
-              ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              AppCard(
+                onTap: _pickMode,
+                child: Row(
+                  children: [
+                    IconBox(
+                      icon: Symbols.lan,
+                      color: context.palette.accentTeal,
+                    ),
+                    const SizedBox(width: AppSpacing.gutter),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Verbindungsart',
+                            style: context.text.labelSmall,
+                          ),
+                          Text(
+                            _connectionMode.label,
+                            style: context.text.bodyMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(
+                      Symbols.expand_more,
+                      color: context.colors.onSurfaceVariant,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
               AppCard(
                 child: Row(
                   children: [
@@ -246,34 +303,6 @@ class _CpParameterFormSheetState extends ConsumerState<CpParameterFormSheet> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 110,
-            child: Text(label, style: context.text.bodySmall),
-          ),
-          Expanded(
-            child: Text(
-              value.isEmpty ? '—' : value,
-              style: context.text.bodyMedium,
-            ),
-          ),
-        ],
       ),
     );
   }

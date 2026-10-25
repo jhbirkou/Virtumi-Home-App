@@ -12,6 +12,7 @@ class CpParameter {
     this.mode = 1,
     this.macAddress = '00:00:00:00:00:00',
     this.ipAddress = '192.168.1.1',
+    this.port,
     this.ipv6 = '',
     this.channel = 1,
     this.name = '',
@@ -40,6 +41,7 @@ class CpParameter {
   final int mode;
   final String macAddress;
   final String ipAddress;
+  final int? port;
   final String ipv6;
   final int channel;
   final String name;
@@ -67,6 +69,7 @@ class CpParameter {
     int? mode,
     String? macAddress,
     String? ipAddress,
+    Object? port = _keepPort,
     String? ipv6,
     int? channel,
     String? name,
@@ -95,6 +98,7 @@ class CpParameter {
       mode: mode ?? this.mode,
       macAddress: macAddress ?? this.macAddress,
       ipAddress: ipAddress ?? this.ipAddress,
+      port: identical(port, _keepPort) ? this.port : port as int?,
       ipv6: ipv6 ?? this.ipv6,
       channel: channel ?? this.channel,
       name: name ?? this.name,
@@ -116,3 +120,5 @@ class CpParameter {
     );
   }
 }
+
+const _keepPort = Object();

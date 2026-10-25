@@ -8,6 +8,8 @@ class CpParameterDeviceOption {
     required this.name,
     required this.code,
     required this.espnowMac,
+    required this.ipAddress,
+    required this.port,
     required this.deviceType,
     required this.deviceTypeName,
     required this.locationPath,
@@ -17,6 +19,8 @@ class CpParameterDeviceOption {
   final String name;
   final String code;
   final String espnowMac;
+  final String ipAddress;
+  final int? port;
   final int deviceType;
   final String deviceTypeName;
   final String locationPath;

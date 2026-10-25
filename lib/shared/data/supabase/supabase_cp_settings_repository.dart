@@ -89,7 +89,7 @@ class SupabaseCpSettingsRepository implements CpSettingsRepository {
     final rows = await _client
         .from('devices')
         .select(
-          'id, name, devicename, device_code, espnow_mac, '
+          'id, name, devicename, device_code, espnow_mac, ip_address, port, '
           'device_types!inner(name, room_id, '
           'rooms!inner(name, floor_id, '
           'floors!inner(name, home_id, '
@@ -131,6 +131,8 @@ class SupabaseCpSettingsRepository implements CpSettingsRepository {
           name: displayName,
           code: row['device_code'] as String? ?? '',
           espnowMac: row['espnow_mac'] as String? ?? '',
+          ipAddress: row['ip_address'] as String? ?? '',
+          port: _devicePort(row['port']),
           deviceType: CpDeviceType.fromDeviceTypeName(typeName),
           deviceTypeName: typeName,
           locationPath: '$homeName / $floorName / $roomName',
@@ -140,6 +142,12 @@ class SupabaseCpSettingsRepository implements CpSettingsRepository {
 
     options.sort((a, b) => a.locationPath.compareTo(b.locationPath));
     return options;
+  }
+
+  int? _devicePort(Object? value) {
+    if (value is int) return value;
+    if (value is String) return int.tryParse(value.trim());
+    return null;
   }
 
   String _deviceDisplayName(Map<String, dynamic> row) {

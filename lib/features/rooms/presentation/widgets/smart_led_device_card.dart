@@ -31,6 +31,7 @@ class SmartLedDeviceCard extends ConsumerStatefulWidget {
     this.showExtendedEffectControls = false,
     this.showEffectPicker = true,
     this.showOfflineStatus = true,
+    this.refreshGeneration = 0,
   });
 
   final Device device;
@@ -43,14 +44,23 @@ class SmartLedDeviceCard extends ConsumerStatefulWidget {
   final bool showEffectPicker;
   final bool showOfflineStatus;
 
+  /// Incremented by the details screen refresh button. While this differs from
+  /// the last applied value, optimistic edits are dropped and the card waits
+  /// for a fresh read (UDP in direct mode, smart_led_settings in cloud mode).
+  final int refreshGeneration;
+
   @override
   ConsumerState<SmartLedDeviceCard> createState() => _SmartLedDeviceCardState();
 }
 
 class _SmartLedDeviceCardState extends ConsumerState<SmartLedDeviceCard> {
   RealtimeService? _realtime;
+
   /// Optimistic strip so power/color/etc. update immediately on tap.
   SmartLedStrip? _pendingStrip;
+
+  /// Last [SmartLedDeviceCard.refreshGeneration] whose reload has finished.
+  int _seenRefreshGeneration = 0;
 
   @override
   void initState() {
@@ -91,17 +101,15 @@ class _SmartLedDeviceCardState extends ConsumerState<SmartLedDeviceCard> {
     // Optimistic UI first — never wait for UDP before updating controls.
     setState(() => _pendingStrip = strip);
     try {
-      await ref.read(smartLedRepositoryProvider).saveStrip(
-            widget.device.id,
-            strip,
-            quickControl: true,
-          );
+      await ref
+          .read(smartLedRepositoryProvider)
+          .saveStrip(widget.device.id, strip, quickControl: true);
     } catch (e) {
       if (mounted && identical(_pendingStrip, strip)) {
         setState(() => _pendingStrip = previous);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Fehler beim Speichern: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Fehler beim Speichern: $e')));
       }
     }
   }
@@ -120,7 +128,10 @@ class _SmartLedDeviceCardState extends ConsumerState<SmartLedDeviceCard> {
     return loaded;
   }
 
-  Future<void> _pickCustomColor(SmartLedStrip strip, {required bool secondary}) async {
+  Future<void> _pickCustomColor(
+    SmartLedStrip strip, {
+    required bool secondary,
+  }) async {
     final initial = secondary ? strip.ledColorValue2 : strip.ledColorValue;
     final picked = await showColorPicker(
       context: context,
@@ -153,212 +164,216 @@ class _SmartLedDeviceCardState extends ConsumerState<SmartLedDeviceCard> {
     final stripsAsync = ref.watch(smartLedStripsProvider(widget.device.id));
     final primary = context.colors.primary;
     final online = widget.device.connectivity == DeviceConnectivity.online;
-
-    return stripsAsync.when(
-      loading: () => AppCard(
-        padding: const EdgeInsets.all(AppSpacing.containerPadding),
-        child: const Center(child: CircularProgressIndicator()),
-      ),
-      error: (e, _) => AppCard(
-        padding: const EdgeInsets.all(AppSpacing.containerPadding),
-        child: Text('Smart LED konnte nicht geladen werden: $e'),
-      ),
-      data: (strips) {
-        final strip = _stripOrDefault(strips);
-        final isOn = strip.ledOn == 1 && strip.effectNumber != -1;
-        final effect = smartLedEffectByNumber(strip.effectNumber);
-        final needsSecondary = effect.needsSecondaryColor;
-
+    final awaitingRefresh = widget.refreshGeneration != _seenRefreshGeneration;
+    final strips = stripsAsync.value;
+    // First open has no strip yet. A refresh keeps the previous value so the
+    // controls stay on screen while status, color, brightness and effect reload.
+    if (strips == null) {
+      if (stripsAsync.hasError) {
         return AppCard(
           padding: const EdgeInsets.all(AppSpacing.containerPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  IconBox(
-                    icon: Symbols.light_group,
-                    color: isOn ? context.palette.accentAmber : primary,
-                    size: AppSizes.iconBoxMd,
-                    filled: true,
-                  ),
-                  const SizedBox(width: AppSpacing.gutter),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          widget.device.name,
-                          style: DeviceCardTextStyles.title(context),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          'Smart LED',
-                          style: DeviceCardTextStyles.subtitle(context),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (widget.showSettingsButton) ...[
-                    NeumorphicIconButton(
-                      icon: Symbols.settings,
-                      iconColor: context.colors.onSurface,
-                      size: 40,
-                      iconSize: 20,
-                      tooltip: 'Geräteeinstellungen',
-                      onPressed: widget.onOpenSettings,
-                    ),
-                  ],
-                  if (widget.showSettingsButton && widget.showDetailsButton)
-                    const SizedBox(width: AppSpacing.sm),
-                  if (widget.showDetailsButton)
-                    _PrimaryNavButton(onPressed: widget.onOpenDetails),
-                ],
-              ),
-              if (widget.showOfflineStatus || online) ...[
-                const SizedBox(height: AppSpacing.md),
-                Row(
-                  children: [
-                    _StatusChip(online: online),
-                  ],
-                ),
-              ],
-              const SizedBox(height: AppSpacing.md),
-              _LedPowerButton(
-                isOn: isOn,
-                enabled: true,
-                onPressed: () {
-                  final updated = strip.copyWith(
-                    ledOn: isOn ? 0 : 1,
-                    effectNumber: !isOn && strip.effectNumber == -1
-                        ? 0
-                        : strip.effectNumber,
-                  );
-                  _saveQuick(updated);
-                },
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Text(
-                'Primärfarbe',
-                style: DeviceCardTextStyles.caption(context, emphasis: true),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              LedColorPalette(
-                compact: true,
-                selectedValue: strip.ledColorValue,
-                enabled: true,
-                onSelected: (value) =>
-                    _saveQuick(strip.copyWith(ledColorValue: value)),
-                onCustomTap: () => _pickCustomColor(strip, secondary: false),
-              ),
-              if (needsSecondary) ...[
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  'Sekundärfarbe',
-                  style: DeviceCardTextStyles.caption(context, emphasis: true),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                LedColorPalette(
-                  compact: true,
-                  selectedValue: strip.ledColorValue2,
-                  enabled: true,
-                  onSelected: (value) =>
-                      _saveQuick(strip.copyWith(ledColorValue2: value)),
-                  onCustomTap: () => _pickCustomColor(strip, secondary: true),
-                ),
-              ],
-              const SizedBox(height: AppSpacing.lg),
-              _CompactBrightness(
-                value: strip.brightness.clamp(1, 100),
-                enabled: true,
-                onChangedEnd: (value) =>
-                    _saveQuick(strip.copyWith(brightness: value)),
-              ),
-              if (widget.showEffectPicker) ...[
-                const SizedBox(height: AppSpacing.md),
-                PressScale(
-                  onTap: () => _pickEffect(strip),
-                  semanticLabel: 'Effekt: ${effect.name}',
-                  child: NeumorphicContainer(
-                    style: NeumorphicStyle.sunken,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                      vertical: AppSpacing.gutter,
-                    ),
-                    borderRadius: AppRadius.mdAll,
-                    child: Row(
-                      children: [
-                        IconBox(
-                          icon: Symbols.auto_awesome,
-                          color: context.palette.accentPurple,
-                          size: 36,
-                        ),
-                        const SizedBox(width: AppSpacing.gutter),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Effekt',
-                                style: DeviceCardTextStyles.caption(context),
-                              ),
-                              Text(
-                                effect.name,
-                                style: DeviceCardTextStyles.subtitle(context),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Icon(
-                          Symbols.chevron_right,
-                          color: context.colors.onSurfaceVariant,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-              if (widget.showExtendedEffectControls) ...[
-                const SizedBox(height: AppSpacing.md),
-                _CompactIntField(
-                  label: 'Effektgeschwindigkeit',
-                  value: strip.speed,
-                  hint: '500',
-                  enabled: true,
-                  onSubmitted: (value) =>
-                      _saveQuick(strip.copyWith(speed: value)),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                SettingsRow.toggle(
-                  icon: Symbols.auto_mode,
-                  title: 'Automatik-Modus',
-                  iconColor: context.palette.accentIndigo,
-                  value: strip.autoMode == 1,
-                  onChanged: (v) =>
-                      _saveQuick(strip.copyWith(autoMode: v ? 1 : 0)),
-                ),
-                if (strip.autoMode == 1) ...[
-                  const SizedBox(height: AppSpacing.md),
-                  _CompactIntField(
-                    label: 'Intervall (s)',
-                    value: (strip.autoModeTime / 1000).round(),
-                    hint: '0',
-                    enabled: true,
-                    onSubmitted: (seconds) => _saveQuick(
-                      strip.copyWith(autoModeTime: seconds * 1000),
-                    ),
-                  ),
-                ],
-              ],
-            ],
+          child: Text(
+            'Smart LED konnte nicht geladen werden: ${stripsAsync.error}',
           ),
         );
-      },
+      }
+      return const AppCard(
+        padding: EdgeInsets.all(AppSpacing.containerPadding),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (awaitingRefresh && !stripsAsync.isLoading) {
+      // Fresh read finished: show the device/cloud values, not the last tap.
+      _pendingStrip = null;
+      _seenRefreshGeneration = widget.refreshGeneration;
+    }
+
+    final strip = _stripOrDefault(strips);
+    final isOn = strip.ledOn == 1 && strip.effectNumber != -1;
+    final effect = smartLedEffectByNumber(strip.effectNumber);
+    final needsSecondary = effect.needsSecondaryColor;
+
+    return AppCard(
+      padding: const EdgeInsets.all(AppSpacing.containerPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              IconBox(
+                icon: Symbols.light_group,
+                color: isOn ? context.palette.accentAmber : primary,
+                size: AppSizes.iconBoxMd,
+                filled: true,
+              ),
+              const SizedBox(width: AppSpacing.gutter),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      widget.device.name,
+                      style: DeviceCardTextStyles.title(context),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      'Smart LED',
+                      style: DeviceCardTextStyles.subtitle(context),
+                    ),
+                  ],
+                ),
+              ),
+              if (widget.showSettingsButton) ...[
+                NeumorphicIconButton(
+                  icon: Symbols.settings,
+                  iconColor: context.colors.onSurface,
+                  size: 40,
+                  iconSize: 20,
+                  tooltip: 'Geräteeinstellungen',
+                  onPressed: widget.onOpenSettings,
+                ),
+              ],
+              if (widget.showSettingsButton && widget.showDetailsButton)
+                const SizedBox(width: AppSpacing.sm),
+              if (widget.showDetailsButton)
+                _PrimaryNavButton(onPressed: widget.onOpenDetails),
+            ],
+          ),
+          if (widget.showOfflineStatus || online) ...[
+            const SizedBox(height: AppSpacing.md),
+            Row(children: [_StatusChip(online: online)]),
+          ],
+          const SizedBox(height: AppSpacing.md),
+          _LedPowerButton(
+            isOn: isOn,
+            enabled: true,
+            onPressed: () {
+              final updated = strip.copyWith(
+                ledOn: isOn ? 0 : 1,
+                effectNumber: !isOn && strip.effectNumber == -1
+                    ? 0
+                    : strip.effectNumber,
+              );
+              _saveQuick(updated);
+            },
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          Text(
+            'Primärfarbe',
+            style: DeviceCardTextStyles.caption(context, emphasis: true),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          LedColorPalette(
+            compact: true,
+            selectedValue: strip.ledColorValue,
+            enabled: true,
+            onSelected: (value) =>
+                _saveQuick(strip.copyWith(ledColorValue: value)),
+            onCustomTap: () => _pickCustomColor(strip, secondary: false),
+          ),
+          if (needsSecondary) ...[
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              'Sekundärfarbe',
+              style: DeviceCardTextStyles.caption(context, emphasis: true),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            LedColorPalette(
+              compact: true,
+              selectedValue: strip.ledColorValue2,
+              enabled: true,
+              onSelected: (value) =>
+                  _saveQuick(strip.copyWith(ledColorValue2: value)),
+              onCustomTap: () => _pickCustomColor(strip, secondary: true),
+            ),
+          ],
+          const SizedBox(height: AppSpacing.lg),
+          _CompactBrightness(
+            value: strip.brightness.clamp(1, 100),
+            enabled: true,
+            onChangedEnd: (value) =>
+                _saveQuick(strip.copyWith(brightness: value)),
+          ),
+          if (widget.showEffectPicker) ...[
+            const SizedBox(height: AppSpacing.md),
+            PressScale(
+              onTap: () => _pickEffect(strip),
+              semanticLabel: 'Effekt: ${effect.name}',
+              child: NeumorphicContainer(
+                style: NeumorphicStyle.sunken,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: AppSpacing.gutter,
+                ),
+                borderRadius: AppRadius.mdAll,
+                child: Row(
+                  children: [
+                    IconBox(
+                      icon: Symbols.auto_awesome,
+                      color: context.palette.accentPurple,
+                      size: 36,
+                    ),
+                    const SizedBox(width: AppSpacing.gutter),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Effekt',
+                            style: DeviceCardTextStyles.caption(context),
+                          ),
+                          Text(
+                            effect.name,
+                            style: DeviceCardTextStyles.subtitle(context),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(
+                      Symbols.chevron_right,
+                      color: context.colors.onSurfaceVariant,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+          if (widget.showExtendedEffectControls) ...[
+            const SizedBox(height: AppSpacing.md),
+            _CompactIntField(
+              label: 'Effektgeschwindigkeit',
+              value: strip.speed,
+              hint: '500',
+              enabled: true,
+              onSubmitted: (value) => _saveQuick(strip.copyWith(speed: value)),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            SettingsRow.toggle(
+              icon: Symbols.auto_mode,
+              title: 'Automatik-Modus',
+              iconColor: context.palette.accentIndigo,
+              value: strip.autoMode == 1,
+              onChanged: (v) => _saveQuick(strip.copyWith(autoMode: v ? 1 : 0)),
+            ),
+            if (strip.autoMode == 1) ...[
+              const SizedBox(height: AppSpacing.md),
+              _CompactIntField(
+                label: 'Intervall (s)',
+                value: (strip.autoModeTime / 1000).round(),
+                hint: '0',
+                enabled: true,
+                onSubmitted: (seconds) =>
+                    _saveQuick(strip.copyWith(autoModeTime: seconds * 1000)),
+              ),
+            ],
+          ],
+        ],
+      ),
     );
   }
 }
@@ -394,7 +409,8 @@ class _CompactIntFieldState extends State<_CompactIntField> {
   @override
   void didUpdateWidget(_CompactIntField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.value != widget.value && _controller.text != '${widget.value}') {
+    if (oldWidget.value != widget.value &&
+        _controller.text != '${widget.value}') {
       _controller.text = '${widget.value}';
     }
   }
@@ -484,8 +500,9 @@ class _LedPowerButton extends StatelessWidget {
             border: context.palette.flatElevation
                 ? Border.all(color: context.palette.cardBorder)
                 : null,
-            boxShadow:
-                context.palette.flatElevation ? null : context.palette.raised,
+            boxShadow: context.palette.flatElevation
+                ? null
+                : context.palette.raised,
           );
 
     return PressScale(
@@ -561,8 +578,9 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color =
-        online ? context.palette.statusOnline : context.colors.outline;
+    final color = online
+        ? context.palette.statusOnline
+        : context.colors.outline;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.sm + AppSpacing.xs,
@@ -634,7 +652,11 @@ class _CompactBrightnessState extends State<_CompactBrightness> {
       children: [
         Row(
           children: [
-            Icon(Symbols.brightness_6, size: 20, color: context.palette.accentAmber),
+            Icon(
+              Symbols.brightness_6,
+              size: 20,
+              color: context.palette.accentAmber,
+            ),
             const SizedBox(width: AppSpacing.sm),
             Text(
               'Helligkeit',

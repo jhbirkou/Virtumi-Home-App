@@ -12,6 +12,8 @@ class MockCpSettingsRepository implements CpSettingsRepository {
       name: 'Smart LED Büro',
       code: 'LED001',
       espnowMac: 'AA:BB:CC:11:22:33',
+      ipAddress: '192.168.1.50',
+      port: 6000,
       deviceType: 80,
       deviceTypeName: 'Smart LED',
       locationPath: 'Home / Etage 1 / Büro',
